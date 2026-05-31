@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IndiaWiseFiling — CRM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1a1410; --paper:#faf6ef; --paper-warm:#f4ead8; --card:#fff;
+    --saffron:#d97706; --saffron-deep:#b45309; --indigo:#1e3a5f; --indigo-deep:#0f1e33;
+    --line:#e8dcc4; --muted:#6b5d4a; --green:#16a34a; --red:#dc2626;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Geist',sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;font-size:14px}
+  .serif{font-family:'Fraunces',serif}
+  .mono{font-family:'Geist Mono',monospace}
+  a{color:var(--saffron-deep);text-decoration:none}
+  button{font-family:inherit;cursor:pointer}
+
+  /* LOGIN */
+  #login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;
+    background:radial-gradient(circle at 30% 30%,rgba(217,119,6,.08),transparent 50%),var(--paper)}
+  .login-card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:2.5rem;width:100%;max-width:380px;
+    box-shadow:0 30px 60px -25px rgba(26,20,16,.2)}
+  .login-card .logo{display:flex;align-items:center;gap:.6rem;margin-bottom:1.8rem}
+  .logo-mark{width:32px;height:32px;border-radius:50%;
+    background:linear-gradient(135deg,var(--saffron) 0 33%,var(--paper) 33% 66%,#138808 66%);
+    position:relative;box-shadow:0 0 0 1px var(--line)}
+  .logo-mark::after{content:'';position:absolute;inset:11px;background:var(--indigo);border-radius:50%}
+  .login-card h1{font-family:'Fraunces',serif;font-size:1.4rem;font-weight:600}
+  .login-card h1 span{color:var(--saffron-deep);font-style:italic}
+  .field{margin-bottom:1rem}
+  .field label{display:block;font-size:.78rem;color:var(--muted);margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.08em;font-family:'Geist Mono',monospace}
+  .field input,.field select,.field textarea{width:100%;padding:.7rem .9rem;border:1px solid var(--line);border-radius:10px;
+    background:var(--paper);font-family:inherit;font-size:.92rem;color:var(--ink)}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--saffron)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.7rem 1.3rem;border-radius:100px;
+    font-size:.9rem;font-weight:500;border:1px solid transparent;transition:all .2s}
+  .btn-primary{background:var(--ink);color:var(--paper);width:100%}
+  .btn-primary:hover{background:var(--saffron-deep)}
+  .btn-ghost{background:transparent;border-color:var(--line);color:var(--ink)}
+  .btn-ghost:hover{background:var(--paper-warm)}
+  .btn-sm{padding:.4rem .8rem;font-size:.82rem}
+  .err{color:var(--red);font-size:.85rem;margin-top:.5rem;min-height:1.2em}
+
+  /* APP SHELL */
+  #app{display:none}
+  .topbar{background:var(--card);border-bottom:1px solid var(--line);padding:.9rem 1.5rem;
+    display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+  .topbar .logo{display:flex;align-items:center;gap:.6rem;font-family:'Fraunces',serif;font-size:1.15rem;font-weight:600}
+  .topbar .logo span{color:var(--saffron-deep);font-style:italic}
+  .topbar .right{display:flex;align-items:center;gap:1rem}
+  .who{font-size:.85rem;color:var(--muted)}
+  .wrap{max-width:1400px;margin:0 auto;padding:1.5rem}
+
+  /* STATS */
+  .stats{display:grid;grid-template-columns:repeat(6,1fr);gap:1rem;margin-bottom:1.5rem}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.1rem}
+  .stat .v{font-family:'Fraunces',serif;font-size:1.7rem;font-weight:500;letter-spacing:-.02em}
+  .stat .l{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:.2rem}
+  .stat.accent{background:var(--ink);color:var(--paper)}
+  .stat.accent .l{color:rgba(250,246,239,.6)}
+  .stat .v small{font-size:.9rem;color:var(--saffron)}
+
+  /* TABS */
+  .tabs{display:flex;gap:.4rem;margin-bottom:1.2rem;border-bottom:1px solid var(--line)}
+  .tab{padding:.6rem 1rem;font-size:.9rem;color:var(--muted);border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-1px}
+  .tab.active{color:var(--ink);border-bottom-color:var(--saffron);font-weight:500}
+
+  /* TOOLBAR */
+  .toolbar{display:flex;gap:.7rem;margin-bottom:1.2rem;flex-wrap:wrap;align-items:center}
+  .toolbar input,.toolbar select{padding:.55rem .8rem;border:1px solid var(--line);border-radius:8px;background:var(--card);font-family:inherit;font-size:.88rem}
+  .toolbar input{min-width:220px}
+  .spacer{flex:1}
+
+  /* KANBAN */
+  .kanban{display:grid;grid-template-columns:repeat(7,1fr);gap:.8rem;overflow-x:auto;padding-bottom:1rem}
+  .col{background:var(--paper-warm);border-radius:12px;padding:.7rem;min-width:170px}
+  .col-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.7rem;padding:0 .3rem}
+  .col-head .name{font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;font-family:'Geist Mono',monospace;font-weight:500}
+  .col-head .count{background:var(--card);border-radius:100px;padding:.1rem .5rem;font-size:.72rem;color:var(--muted)}
+  .col[data-status="new"] .name{color:#2563eb}
+  .col[data-status="contacted"] .name{color:#7c3aed}
+  .col[data-status="quoted"] .name{color:var(--saffron-deep)}
+  .col[data-status="paid"] .name{color:var(--green)}
+  .col[data-status="in_progress"] .name{color:#0891b2}
+  .col[data-status="completed"] .name{color:#059669}
+  .col[data-status="lost"] .name{color:var(--red)}
+  .lead-card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.7rem;margin-bottom:.6rem;cursor:pointer;transition:all .15s}
+  .lead-card:hover{border-color:var(--ink);transform:translateY(-1px);box-shadow:0 6px 14px -8px rgba(26,20,16,.25)}
+  .lead-card .lc-name{font-weight:500;font-size:.88rem;margin-bottom:.2rem}
+  .lead-card .lc-svc{font-size:.76rem;color:var(--muted);margin-bottom:.4rem}
+  .lead-card .lc-foot{display:flex;justify-content:space-between;align-items:center;font-size:.72rem;color:var(--muted)}
+  .lead-card .lc-val{font-family:'Geist Mono',monospace;color:var(--ink);font-weight:500}
+  .pill{display:inline-block;padding:.1rem .45rem;border-radius:100px;font-size:.68rem;font-family:'Geist Mono',monospace}
+  .pill.src{background:var(--paper-warm);color:var(--muted)}
+
+  /* TABLE */
+  table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  th{text-align:left;padding:.7rem .9rem;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);
+    background:var(--paper-warm);font-family:'Geist Mono',monospace;font-weight:500}
+  td{padding:.7rem .9rem;border-top:1px solid var(--line);font-size:.88rem}
+  tr.row{cursor:pointer}
+  tr.row:hover td{background:var(--paper-warm)}
+  .status-badge{padding:.2rem .6rem;border-radius:100px;font-size:.72rem;font-weight:500;text-transform:capitalize}
+  .s-new{background:#dbeafe;color:#1e40af}
+  .s-contacted{background:#ede9fe;color:#6d28d9}
+  .s-quoted{background:#fef3c7;color:var(--saffron-deep)}
+  .s-paid{background:#dcfce7;color:#166534}
+  .s-in_progress{background:#cffafe;color:#0e7490}
+  .s-completed{background:#d1fae5;color:#065f46}
+  .s-lost{background:#fee2e2;color:#991b1b}
+
+  /* DRAWER */
+  .drawer-bg{position:fixed;inset:0;background:rgba(15,30,51,.4);z-index:90;display:none}
+  .drawer-bg.show{display:block}
+  .drawer{position:fixed;top:0;right:0;bottom:0;width:520px;max-width:92vw;background:var(--paper);z-index:91;
+    transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);overflow-y:auto;box-shadow:-20px 0 50px -20px rgba(0,0,0,.3)}
+  .drawer.show{transform:translateX(0)}
+  .drawer-head{padding:1.5rem;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--paper);z-index:2}
+  .drawer-head .dh-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.7rem}
+  .drawer-head h2{font-family:'Fraunces',serif;font-size:1.4rem;font-weight:500}
+  .drawer-head .meta{font-size:.85rem;color:var(--muted);display:flex;flex-direction:column;gap:.2rem}
+  .drawer-head .meta a{color:var(--saffron-deep)}
+  .close-x{background:none;border:none;font-size:1.5rem;color:var(--muted);line-height:1}
+  .drawer-body{padding:1.5rem}
+  .sect{margin-bottom:1.6rem}
+  .sect h3{font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-family:'Geist Mono',monospace;margin-bottom:.7rem}
+  .status-row{display:flex;flex-wrap:wrap;gap:.4rem}
+  .status-opt{padding:.35rem .7rem;border:1px solid var(--line);border-radius:100px;font-size:.78rem;background:var(--card);text-transform:capitalize}
+  .status-opt.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .timeline{display:flex;flex-direction:column;gap:.8rem}
+  .tl-item{display:flex;gap:.7rem}
+  .tl-dot{width:8px;height:8px;border-radius:50%;background:var(--saffron);margin-top:.35rem;flex-shrink:0}
+  .tl-item.status_change .tl-dot{background:var(--indigo)}
+  .tl-item.payment .tl-dot{background:var(--green)}
+  .tl-body{flex:1}
+  .tl-body .tl-text{font-size:.86rem}
+  .tl-body .tl-time{font-size:.72rem;color:var(--muted);font-family:'Geist Mono',monospace}
+  .compose{display:flex;flex-direction:column;gap:.6rem}
+  .compose textarea{min-height:70px;resize:vertical}
+  .compose-actions{display:flex;gap:.5rem}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+  .toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--paper);
+    padding:.7rem 1.2rem;border-radius:100px;font-size:.85rem;z-index:200;opacity:0;transition:opacity .3s;pointer-events:none}
+  .toast.show{opacity:1}
+  .empty{text-align:center;padding:3rem;color:var(--muted)}
+  @media(max-width:1100px){.stats{grid-template-columns:repeat(3,1fr)}.kanban{grid-template-columns:repeat(7,minmax(160px,1fr))}}
+  @media(max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login">
+  <div class="login-card">
+    <div class="logo"><span class="logo-mark"></span><span class="serif" style="font-size:1.2rem;font-weight:600">IndiaWise<span style="color:var(--saffron-deep);font-style:italic">Filing</span></span></div>
+    <h1>CRM <span>Login</span></h1>
+    <p style="color:var(--muted);font-size:.85rem;margin:.4rem 0 1.5rem">Sign in to manage leads and pipeline.</p>
+    <div class="field"><label>Email</label><input id="li-email" type="email" value="" placeholder="admin@indiawisefiling.com"></div>
+    <div class="field"><label>Password</label><input id="li-pass" type="password" placeholder="••••••••"></div>
+    <button class="btn btn-primary" onclick="doLogin()">Sign in →</button>
+    <div class="err" id="li-err"></div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="topbar">
+    <div class="logo"><span class="logo-mark"></span>IndiaWise<span>Filing</span> <span style="color:var(--muted);font-style:normal;font-weight:400;font-size:.85rem;font-family:Geist">CRM</span></div>
+    <div class="right">
+      <span class="who" id="who"></span>
+      <button class="btn btn-ghost btn-sm" onclick="exportCsv()">Export CSV</button>
+      <button class="btn btn-ghost btn-sm" onclick="logout()">Logout</button>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <!-- STATS -->
+    <div class="stats" id="stats"></div>
+
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab active" data-view="kanban" onclick="setView('kanban')">Pipeline</button>
+      <button class="tab" data-view="table" onclick="setView('table')">All Leads</button>
+    </div>
+
+    <!-- TOOLBAR -->
+    <div class="toolbar">
+      <input id="search" placeholder="Search name, phone, email…" oninput="debouncedLoad()">
+      <select id="f-source" onchange="loadLeads()">
+        <option value="">All sources</option>
+        <option value="website">Website</option>
+        <option value="referral">Referral</option>
+        <option value="ad">Ad</option>
+        <option value="whatsapp">WhatsApp</option>
+      </select>
+      <div class="spacer"></div>
+      <button class="btn btn-ghost btn-sm" onclick="loadAll()">Refresh</button>
+    </div>
+
+    <!-- KANBAN VIEW -->
+    <div id="kanban-view"><div class="kanban" id="kanban"></div></div>
+
+    <!-- TABLE VIEW -->
+    <div id="table-view" style="display:none">
+      <table>
+        <thead><tr><th>Name</th><th>Phone</th><th>Service</th><th>Status</th><th>Value</th><th>Source</th><th>Updated</th></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- DRAWER -->
+<div class="drawer-bg" id="drawerBg" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer"></div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API = location.origin + '/api';
+// The dashboard itself is served from /crm/, but the API stays at /api so
+// the marketing website can also POST leads to /api/leads/capture without
+// needing to know about /crm.
+let TOKEN = localStorage.getItem('iwf_token') || null;
+let ME = JSON.parse(localStorage.getItem('iwf_me') || 'null');
+let VIEW = 'kanban';
+let CURRENT_LEAD = null;
+const STATUS_LABELS = {new:'New',contacted:'Contacted',quoted:'Quoted',paid:'Paid',in_progress:'In Progress',completed:'Completed',lost:'Lost'};
+const STATUSES = ['new','contacted','quoted','paid','in_progress','completed','lost'];
+
+function authHeaders(){return {'Content-Type':'application/json','Authorization':'Bearer '+TOKEN};}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+function fmtMoney(n){return n?('₹'+Number(n).toLocaleString('en-IN')):'—';}
+function fmtDate(s){if(!s)return '';const d=new Date(s.replace(' ','T')+'Z');return d.toLocaleDateString('en-IN',{day:'numeric',month:'short'})+' '+d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});}
+
+async function doLogin(){
+  const email=document.getElementById('li-email').value.trim();
+  const password=document.getElementById('li-pass').value;
+  const errEl=document.getElementById('li-err'); errEl.textContent='';
+  try{
+    const r=await fetch(API+'/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password})});
+    const data=await r.json();
+    if(!r.ok){errEl.textContent=data.error||'Login failed';return;}
+    TOKEN=data.token; ME=data.user;
+    localStorage.setItem('iwf_token',TOKEN); localStorage.setItem('iwf_me',JSON.stringify(ME));
+    showApp();
+  }catch(e){errEl.textContent='Network error';}
+}
+function logout(){TOKEN=null;ME=null;localStorage.clear();location.reload();}
+function showApp(){
+  document.getElementById('login').style.display='none';
+  document.getElementById('app').style.display='block';
+  document.getElementById('who').textContent=ME.name+' · '+ME.role;
+  loadAll();
+}
+function setView(v){VIEW=v;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.view===v));
+  document.getElementById('kanban-view').style.display=v==='kanban'?'block':'none';
+  document.getElementById('table-view').style.display=v==='table'?'block':'none';
+  loadLeads();
+}
+async function loadAll(){await Promise.all([loadStats(),loadLeads()]);}
+
+async function loadStats(){
+  const r=await fetch(API+'/stats',{headers:authHeaders()});
+  if(r.status===401)return logout();
+  const s=await r.json();
+  const el=document.getElementById('stats');
+  el.innerHTML=`
+    <div class="stat accent"><div class="v">${s.total}</div><div class="l">Total Leads</div></div>
+    <div class="stat"><div class="v">${s.today}</div><div class="l">Today</div></div>
+    <div class="stat"><div class="v">${s.thisWeek}</div><div class="l">This Week</div></div>
+    <div class="stat"><div class="v">${s.byStatus.new||0}</div><div class="l">New / Unworked</div></div>
+    <div class="stat"><div class="v">${fmtMoney(s.pipelineValue)}</div><div class="l">In Pipeline</div></div>
+    <div class="stat"><div class="v" style="color:var(--green)">${fmtMoney(s.wonValue)}</div><div class="l">Won Revenue</div></div>`;
+}
+
+let leadsCache=[];
+async function loadLeads(){
+  const search=document.getElementById('search').value.trim();
+  const source=document.getElementById('f-source').value;
+  const q=new URLSearchParams({limit:'200'});
+  if(search)q.set('search',search); if(source)q.set('source',source);
+  const r=await fetch(API+'/leads?'+q,{headers:authHeaders()});
+  if(r.status===401)return logout();
+  const data=await r.json(); leadsCache=data.leads;
+  VIEW==='kanban'?renderKanban(leadsCache):renderTable(leadsCache);
+}
+let dt;function debouncedLoad(){clearTimeout(dt);dt=setTimeout(loadLeads,300);}
+
+function renderKanban(leads){
+  const k=document.getElementById('kanban'); k.innerHTML='';
+  STATUSES.forEach(st=>{
+    const items=leads.filter(l=>l.status===st);
+    const col=document.createElement('div'); col.className='col'; col.dataset.status=st;
+    col.innerHTML=`<div class="col-head"><span class="name">${STATUS_LABELS[st]}</span><span class="count">${items.length}</span></div>`;
+    items.forEach(l=>{
+      const c=document.createElement('div'); c.className='lead-card'; c.onclick=()=>openLead(l.id);
+      c.innerHTML=`<div class="lc-name">${esc(l.name)}</div>
+        <div class="lc-svc">${esc(l.service||'General enquiry')}</div>
+        <div class="lc-foot"><span class="pill src">${esc(l.source)}</span><span class="lc-val">${l.value?fmtMoney(l.value):''}</span></div>`;
+      col.appendChild(c);
+    });
+    k.appendChild(col);
+  });
+}
+function renderTable(leads){
+  const tb=document.getElementById('tbody');
+  if(!leads.length){tb.innerHTML='<tr><td colspan="7"><div class="empty">No leads yet. They\'ll appear here as the website captures them.</div></td></tr>';return;}
+  tb.innerHTML=leads.map(l=>`<tr class="row" onclick="openLead(${l.id})">
+    <td><b>${esc(l.name)}</b></td><td class="mono">${esc(l.phone)}</td>
+    <td>${esc(l.service||'—')}</td>
+    <td><span class="status-badge s-${l.status}">${STATUS_LABELS[l.status]}</span></td>
+    <td class="mono">${l.value?fmtMoney(l.value):'—'}</td>
+    <td><span class="pill src">${esc(l.source)}</span></td>
+    <td style="color:var(--muted)">${fmtDate(l.updated_at)}</td></tr>`).join('');
+}
+
+async function openLead(id){
+  const r=await fetch(API+'/leads/'+id,{headers:authHeaders()});
+  const l=await r.json(); CURRENT_LEAD=l;
+  const d=document.getElementById('drawer');
+  d.innerHTML=`
+    <div class="drawer-head">
+      <div class="dh-top">
+        <h2>${esc(l.name)}</h2>
+        <button class="close-x" onclick="closeDrawer()">×</button>
+      </div>
+      <div class="meta">
+        <span>📞 <a href="tel:${esc(l.phone)}">${esc(l.phone)}</a> · <a href="https://wa.me/91${esc(l.phone)}" target="_blank">WhatsApp</a></span>
+        ${l.email?`<span>✉️ <a href="mailto:${esc(l.email)}">${esc(l.email)}</a></span>`:''}
+        <span>Service: ${esc(l.service||'—')} · Source: ${esc(l.source)}</span>
+      </div>
+    </div>
+    <div class="drawer-body">
+      <div class="sect">
+        <h3>Status</h3>
+        <div class="status-row">${STATUSES.map(s=>`<button class="status-opt ${s===l.status?'active':''}" onclick="setStatus(${l.id},'${s}')">${STATUS_LABELS[s]}</button>`).join('')}</div>
+      </div>
+      <div class="sect">
+        <h3>Deal value</h3>
+        <div class="grid2">
+          <input class="field" id="dv-value" type="number" value="${l.value||''}" placeholder="Quote amount ₹" style="padding:.6rem .8rem;border:1px solid var(--line);border-radius:8px">
+          <button class="btn btn-ghost btn-sm" onclick="saveValue(${l.id})">Save value</button>
+        </div>
+      </div>
+      <div class="sect">
+        <h3>Send message</h3>
+        <div class="compose">
+          <textarea id="msg-text" placeholder="Type a WhatsApp or email message…" style="padding:.6rem .8rem;border:1px solid var(--line);border-radius:8px;font-family:inherit"></textarea>
+          <div class="compose-actions">
+            <button class="btn btn-ghost btn-sm" onclick="sendMsg(${l.id},'whatsapp')">Send WhatsApp</button>
+            <button class="btn btn-ghost btn-sm" onclick="sendMsg(${l.id},'email')">Send Email</button>
+          </div>
+        </div>
+      </div>
+      <div class="sect">
+        <h3>Add note / log call</h3>
+        <div class="compose">
+          <textarea id="note-text" placeholder="What happened?" style="padding:.6rem .8rem;border:1px solid var(--line);border-radius:8px;font-family:inherit"></textarea>
+          <div class="compose-actions">
+            <button class="btn btn-ghost btn-sm" onclick="addNote(${l.id},'note')">Add note</button>
+            <button class="btn btn-ghost btn-sm" onclick="addNote(${l.id},'call')">Log call</button>
+          </div>
+        </div>
+      </div>
+      <div class="sect">
+        <h3>Activity timeline</h3>
+        <div class="timeline">${(l.activities||[]).map(a=>`
+          <div class="tl-item ${a.type}"><div class="tl-dot"></div>
+            <div class="tl-body"><div class="tl-text">${esc(a.content||a.type)}</div>
+            <div class="tl-time">${a.user_name?esc(a.user_name)+' · ':''}${fmtDate(a.created_at)}</div></div></div>`).join('')||'<div style="color:var(--muted);font-size:.85rem">No activity yet</div>'}</div>
+      </div>
+    </div>`;
+  document.getElementById('drawerBg').classList.add('show');
+  d.classList.add('show');
+}
+function closeDrawer(){document.getElementById('drawer').classList.remove('show');document.getElementById('drawerBg').classList.remove('show');}
+
+async function setStatus(id,status){
+  await fetch(API+`/leads/${id}/status`,{method:'PATCH',headers:authHeaders(),body:JSON.stringify({status})});
+  toast('Status → '+STATUS_LABELS[status]); openLead(id); loadAll();
+}
+async function saveValue(id){
+  const value=parseInt(document.getElementById('dv-value').value||'0',10);
+  await fetch(API+`/leads/${id}`,{method:'PATCH',headers:authHeaders(),body:JSON.stringify({value})});
+  toast('Value saved'); loadStats();
+}
+async function addNote(id,type){
+  const content=document.getElementById('note-text').value.trim(); if(!content)return;
+  await fetch(API+`/leads/${id}/activities`,{method:'POST',headers:authHeaders(),body:JSON.stringify({type,content})});
+  toast(type==='call'?'Call logged':'Note added'); openLead(id);
+}
+async function sendMsg(id,channel){
+  const content=document.getElementById('msg-text').value.trim(); if(!content)return;
+  await fetch(API+`/leads/${id}/message`,{method:'POST',headers:authHeaders(),body:JSON.stringify({channel,content,subject:'IndiaWiseFiling'})});
+  toast((channel==='email'?'Email':'WhatsApp')+' sent'); document.getElementById('msg-text').value=''; openLead(id);
+}
+async function exportCsv(){
+  const r=await fetch(API+'/leads-export.csv',{headers:authHeaders()});
+  const blob=await r.blob(); const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download='leads.csv'; a.click();
+}
+function esc(s){return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+// boot
+if(TOKEN&&ME)showApp();
+document.getElementById('li-pass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+</script>
+</body>
+</html>

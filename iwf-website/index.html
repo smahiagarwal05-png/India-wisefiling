@@ -1,0 +1,3618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IndiaWiseFilings — Compliance, Simplified for Indian Businesses</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- Razorpay Checkout -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<style>
+  :root {
+    --ink: #1a1410;
+    --paper: #faf6ef;
+    --paper-warm: #f4ead8;
+    --saffron: #d97706;
+    --saffron-deep: #b45309;
+    --indigo: #1e3a5f;
+    --indigo-deep: #0f1e33;
+    --olive: #5c5a3d;
+    --rust: #8b3a1a;
+    --line: #e8dcc4;
+    --muted: #6b5d4a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Geist', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .display { font-family: 'Fraunces', serif; font-weight: 500; letter-spacing: -0.02em; }
+  .mono { font-family: 'Geist Mono', monospace; }
+
+  /* Decorative background pattern - inspired by Indian block prints */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(217, 119, 6, 0.04) 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(30, 58, 95, 0.03) 0%, transparent 40%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ========== NAV ========== */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+    background: rgba(250, 246, 239, 0.85);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 1.1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: 'Fraunces', serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+  .logo-mark {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--saffron) 0%, var(--saffron) 33%, var(--paper) 33%, var(--paper) 66%, #138808 66%);
+    position: relative;
+    box-shadow: 0 0 0 1px var(--line), inset 0 0 0 1px rgba(0,0,0,0.05);
+  }
+  .logo-mark::after {
+    content: '';
+    position: absolute;
+    inset: 11px;
+    background: var(--indigo);
+    border-radius: 50%;
+  }
+  .logo span:last-child { color: var(--saffron-deep); font-style: italic; font-weight: 500; }
+
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 400;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a:hover { color: var(--saffron-deep); }
+  .nav-cta {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.4rem;
+    border-radius: 100px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-ghost { color: var(--ink); border-color: var(--line); background: transparent; }
+  .btn-ghost:hover { background: var(--paper-warm); border-color: var(--ink); }
+  .btn-primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .btn-primary:hover { background: var(--saffron-deep); border-color: var(--saffron-deep); }
+  .btn-saffron { background: var(--saffron); color: white; border-color: var(--saffron); }
+  .btn-saffron:hover { background: var(--saffron-deep); transform: translateY(-1px); }
+
+  /* ========== MEGA MENU ========== */
+  .nav-links li.has-mega { position: static; }
+  .nav-links a.mega-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.5rem 0;
+    cursor: pointer;
+  }
+  .mega-trigger svg {
+    transition: transform 0.25s;
+    opacity: 0.6;
+  }
+  .has-mega:hover .mega-trigger { color: var(--saffron-deep); }
+  .has-mega:hover .mega-trigger svg { transform: rotate(180deg); opacity: 1; }
+
+  .mega-panel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    background: var(--paper);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 30px 60px -25px rgba(26, 20, 16, 0.15);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity 0.25s, visibility 0.25s, transform 0.25s;
+    z-index: 99;
+  }
+  .has-mega:hover .mega-panel,
+  .mega-panel:hover {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  .mega-inner {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem 2.8rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 2.5rem;
+    position: relative;
+  }
+  .mega-col h6 {
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--saffron-deep);
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px dashed var(--line);
+  }
+  .mega-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .mega-col ul li a {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 400;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.2rem 0;
+  }
+  .mega-col ul li a::before {
+    content: '';
+    width: 4px;
+    height: 4px;
+    background: var(--saffron);
+    border-radius: 1px;
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .mega-col ul li a:hover {
+    color: var(--saffron-deep);
+    transform: translateX(2px);
+  }
+  .mega-col ul li a:hover::before {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .mega-col .popular {
+    font-size: 0.68rem;
+    background: var(--saffron);
+    color: white;
+    padding: 0.1rem 0.4rem;
+    border-radius: 3px;
+    margin-left: 0.4rem;
+    font-family: 'Geist Mono', monospace;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    vertical-align: middle;
+  }
+  .mega-col .new {
+    font-size: 0.68rem;
+    background: #16a34a;
+    color: white;
+    padding: 0.1rem 0.4rem;
+    border-radius: 3px;
+    margin-left: 0.4rem;
+    font-family: 'Geist Mono', monospace;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    vertical-align: middle;
+  }
+
+  /* Featured promo card inside mega menu */
+  .mega-promo {
+    grid-column: span 1;
+    background: linear-gradient(135deg, var(--indigo-deep) 0%, var(--indigo) 100%);
+    border-radius: 14px;
+    padding: 1.8rem;
+    color: var(--paper);
+    position: relative;
+    overflow: hidden;
+  }
+  .mega-promo::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--saffron) 0%, transparent 70%);
+    opacity: 0.3;
+  }
+  .mega-promo .promo-tag {
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--saffron);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.7rem;
+    position: relative;
+  }
+  .mega-promo h6 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.25rem;
+    color: var(--paper);
+    margin-bottom: 0.6rem;
+    border: none;
+    padding: 0;
+    text-transform: none;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    font-weight: 500;
+    position: relative;
+  }
+  .mega-promo p {
+    font-size: 0.85rem;
+    color: rgba(250, 246, 239, 0.7);
+    margin-bottom: 1.2rem;
+    line-height: 1.5;
+    position: relative;
+  }
+  .mega-promo a.promo-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--saffron);
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 500;
+    transition: gap 0.2s;
+    position: relative;
+  }
+  .mega-promo a.promo-link:hover { gap: 0.7rem; }
+
+  .mega-footer {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 1.1rem 2rem;
+    border-top: 1px solid var(--line);
+    background: var(--paper-warm);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+  }
+  .mega-footer .left {
+    color: var(--muted);
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+  }
+  .mega-footer .right a {
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .mega-footer .right a:hover { color: var(--saffron-deep); }
+
+  /* ========== WHY US (interactive split panel) ========== */
+  .why {
+    position: relative;
+    padding: 7rem 2rem;
+    background:
+      linear-gradient(rgba(15, 30, 51, 0.78), rgba(15, 30, 51, 0.85)),
+      radial-gradient(ellipse at top, rgba(217, 119, 6, 0.15), transparent 60%),
+      var(--indigo-deep);
+    overflow: hidden;
+  }
+  .why::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(45deg, transparent 0 40px, rgba(250, 246, 239, 0.015) 40px 41px),
+      repeating-linear-gradient(-45deg, transparent 0 40px, rgba(250, 246, 239, 0.015) 40px 41px);
+    pointer-events: none;
+  }
+  .why::after {
+    content: '';
+    position: absolute;
+    top: 20%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(217, 119, 6, 0.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .why-inner {
+    max-width: 1320px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .why .section-header { margin-bottom: 3.5rem; }
+  .why .section-header h2 { color: var(--paper); }
+  .why .section-header p { color: rgba(250, 246, 239, 0.65); }
+  .why .section-eyebrow { color: #f59e0b; }
+  .why-panel {
+    background: var(--paper);
+    border-radius: 24px;
+    padding: 1.5rem;
+    box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.5);
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .why-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .why-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.1rem 1.3rem;
+    border-radius: 14px;
+    background: var(--paper-warm);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid transparent;
+    position: relative;
+  }
+  .why-item:hover {
+    background: white;
+    border-color: var(--line);
+  }
+  .why-item.active {
+    background: var(--ink);
+    border-color: var(--ink);
+  }
+  .why-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(217, 119, 6, 0.12);
+    color: var(--saffron-deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.3s;
+  }
+  .why-item.active .why-icon {
+    background: var(--saffron);
+    color: white;
+  }
+  .why-label {
+    flex: 1;
+    font-family: 'Fraunces', serif;
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    transition: color 0.3s;
+  }
+  .why-item.active .why-label { color: var(--paper); }
+  .why-arrow {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: white;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    flex-shrink: 0;
+  }
+  .why-item.active .why-arrow {
+    background: var(--saffron);
+    color: white;
+    transform: rotate(-45deg);
+  }
+  .why-detail {
+    background: var(--paper-warm);
+    border-radius: 14px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .why-visual {
+    flex: 1;
+    border-radius: 10px;
+    background-size: cover;
+    background-position: center;
+    min-height: 280px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 1.2rem;
+  }
+  .why-visual::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(15, 30, 51, 0.4), transparent 50%);
+  }
+  .why-visual-overlay {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    right: 1rem;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.72rem;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .why-visual-overlay::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #16a34a;
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.3);
+  }
+  .why-desc {
+    font-size: 0.95rem;
+    color: var(--ink);
+    line-height: 1.55;
+    font-weight: 500;
+  }
+  .why-desc .light {
+    color: var(--muted);
+    font-weight: 400;
+    display: block;
+    margin-top: 0.4rem;
+  }
+
+  /* CSS-only generated illustrations for each panel (no external images needed) */
+  .scene {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  /* Scene 1: Confidential — vault / fingerprint */
+  .scene-1 {
+    background: linear-gradient(135deg, #0f1e33 0%, #1e3a5f 50%, #2d4a73 100%);
+  }
+  .scene-1::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 30% 40%, rgba(217, 119, 6, 0.3) 0%, transparent 35%),
+      radial-gradient(circle at 70% 70%, rgba(217, 119, 6, 0.15) 0%, transparent 35%);
+  }
+  .scene-1 .center-mark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 2px dashed rgba(250, 246, 239, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: spin 30s linear infinite;
+  }
+  .scene-1 .center-mark::before {
+    content: '';
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--saffron);
+    box-shadow: 0 0 40px rgba(217, 119, 6, 0.5);
+    animation: spin 30s linear infinite reverse;
+  }
+  .scene-1 .center-mark::after {
+    content: '🔒';
+    position: absolute;
+    font-size: 28px;
+    animation: spin 30s linear infinite reverse;
+  }
+  @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+  /* Scene 2: No hidden fees — invoice / coins */
+  .scene-2 {
+    background: linear-gradient(135deg, #2d1810 0%, #5c2f1a 50%, #8b3a1a 100%);
+  }
+  .scene-2 .invoice {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-4deg);
+    width: 180px;
+    background: var(--paper);
+    border-radius: 8px;
+    padding: 1.2rem;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--ink);
+  }
+  .scene-2 .invoice div {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.3rem 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .scene-2 .invoice div:last-child {
+    border: none;
+    margin-top: 0.4rem;
+    padding-top: 0.7rem;
+    border-top: 2px solid var(--ink);
+    font-weight: 700;
+    color: var(--saffron-deep);
+  }
+  .scene-2 .stamp {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(20%, -80%) rotate(-12deg);
+    border: 3px solid #16a34a;
+    color: #16a34a;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+  }
+
+  /* Scene 3: Satisfaction — review stars */
+  .scene-3 {
+    background: linear-gradient(135deg, #d97706 0%, #f59e0b 50%, #fbbf24 100%);
+  }
+  .scene-3 .review-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 220px;
+    background: var(--paper);
+    border-radius: 12px;
+    padding: 1.3rem;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    text-align: center;
+  }
+  .scene-3 .review-card .num {
+    font-family: 'Fraunces', serif;
+    font-size: 3rem;
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+  .scene-3 .review-card .stars {
+    color: var(--saffron);
+    font-size: 1.1rem;
+    letter-spacing: 0.2em;
+    margin: 0.4rem 0;
+  }
+  .scene-3 .review-card .label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-family: 'Geist Mono', monospace;
+  }
+
+  /* Scene 4: Expert CAs — profile chips */
+  .scene-4 {
+    background: linear-gradient(135deg, #1a1410 0%, #2d2418 50%, #5c5a3d 100%);
+  }
+  .scene-4 .profile {
+    position: absolute;
+    background: var(--paper);
+    border-radius: 100px;
+    padding: 0.5rem 1rem 0.5rem 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    font-size: 0.78rem;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .scene-4 .profile span {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--saffron), var(--rust));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.7rem;
+    font-family: 'Fraunces', serif;
+  }
+  .scene-4 .profile.p1 { top: 15%; left: 10%; }
+  .scene-4 .profile.p2 { top: 30%; right: 8%; }
+  .scene-4 .profile.p3 { bottom: 30%; left: 15%; }
+  .scene-4 .profile.p4 { bottom: 15%; right: 12%; }
+  .scene-4 .center-badge {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background: var(--saffron);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 0 8px rgba(217, 119, 6, 0.2), 0 0 0 16px rgba(217, 119, 6, 0.1);
+  }
+  .scene-4 .center-badge .num {
+    font-family: 'Fraunces', serif;
+    font-size: 1.8rem;
+    font-weight: 500;
+    line-height: 1;
+  }
+  .scene-4 .center-badge .label {
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  /* ========== EXPERTS SECTION ========== */
+  .experts {
+    padding: 6rem 2rem;
+    background: var(--paper);
+    position: relative;
+  }
+  .experts-inner {
+    max-width: 1320px;
+    margin: 0 auto;
+  }
+  .experts .section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+  .experts-headline {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.9rem, 3.6vw, 2.9rem);
+    line-height: 1.15;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .experts-headline em { color: var(--saffron-deep); font-weight: 500; }
+  .experts-headline .count {
+    display: inline-block;
+    padding: 0 0.6rem;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 8px;
+    margin-right: 0.4rem;
+    font-style: normal;
+  }
+  .experts-headline .count sup {
+    color: var(--saffron);
+    font-size: 0.7em;
+    margin-left: 0.1em;
+    vertical-align: super;
+  }
+
+  .experts-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 1.2fr;
+    gap: 3rem;
+    align-items: stretch;
+  }
+
+  /* Visual side - illustrated stack of expert cards */
+  .experts-visual {
+    position: relative;
+    background: linear-gradient(135deg, var(--paper-warm) 0%, #ede1c8 100%);
+    border-radius: 24px;
+    padding: 2.5rem;
+    overflow: hidden;
+    min-height: 480px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .experts-visual::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(217, 119, 6, 0.12) 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(30, 58, 95, 0.08) 0%, transparent 40%);
+  }
+  .experts-visual::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent 0 24px, rgba(26, 20, 16, 0.025) 24px 25px),
+      repeating-linear-gradient(90deg, transparent 0 24px, rgba(26, 20, 16, 0.025) 24px 25px);
+    pointer-events: none;
+  }
+
+  /* Big center expert card */
+  .expert-main-card {
+    position: relative;
+    z-index: 2;
+    background: white;
+    border-radius: 18px;
+    padding: 1.8rem;
+    box-shadow: 0 25px 50px -15px rgba(26, 20, 16, 0.25);
+    width: 280px;
+    text-align: center;
+    border: 1px solid var(--line);
+    transform: rotate(-2deg);
+    transition: transform 0.4s;
+  }
+  .expert-main-card:hover { transform: rotate(0deg) scale(1.02); }
+  .expert-avatar-lg {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+    background: linear-gradient(135deg, var(--indigo) 0%, var(--indigo-deep) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--paper);
+    font-family: 'Fraunces', serif;
+    font-size: 2.2rem;
+    font-weight: 500;
+    position: relative;
+    box-shadow: 0 0 0 4px white, 0 0 0 5px var(--saffron);
+  }
+  .expert-avatar-lg::after {
+    content: '✓';
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    width: 28px;
+    height: 28px;
+    background: #16a34a;
+    border-radius: 50%;
+    color: white;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid white;
+  }
+  .expert-main-card .name {
+    font-family: 'Fraunces', serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+  }
+  .expert-main-card .credentials {
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--saffron-deep);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.2rem;
+  }
+  .expert-main-card .meta {
+    display: flex;
+    justify-content: space-around;
+    padding: 1rem 0;
+    border-top: 1px dashed var(--line);
+    border-bottom: 1px dashed var(--line);
+    margin-bottom: 1rem;
+  }
+  .expert-main-card .meta-item .val {
+    font-family: 'Fraunces', serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .expert-main-card .meta-item .lbl {
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .expert-main-card .live-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+  .expert-main-card .live-status::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #16a34a;
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.2);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.2); }
+    50% { box-shadow: 0 0 0 6px rgba(22, 163, 74, 0.1); }
+  }
+
+  /* Floating mini expert chips */
+  .expert-chip {
+    position: absolute;
+    background: white;
+    border-radius: 100px;
+    padding: 0.5rem 1rem 0.5rem 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    box-shadow: 0 15px 30px -10px rgba(26, 20, 16, 0.2);
+    font-size: 0.82rem;
+    color: var(--ink);
+    font-weight: 500;
+    z-index: 3;
+    border: 1px solid var(--line);
+  }
+  .expert-chip .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: 'Fraunces', serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+  .expert-chip .role {
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display: block;
+  }
+  .expert-chip.c1 { top: 8%; left: 4%; transform: rotate(-5deg); }
+  .expert-chip.c1 .avatar { background: linear-gradient(135deg, #d97706, #b45309); }
+  .expert-chip.c2 { top: 12%; right: 6%; transform: rotate(4deg); }
+  .expert-chip.c2 .avatar { background: linear-gradient(135deg, #1e3a5f, #0f1e33); }
+  .expert-chip.c3 { bottom: 14%; left: 6%; transform: rotate(3deg); }
+  .expert-chip.c3 .avatar { background: linear-gradient(135deg, #5c5a3d, #3d3b29); }
+  .expert-chip.c4 { bottom: 8%; right: 4%; transform: rotate(-4deg); }
+  .expert-chip.c4 .avatar { background: linear-gradient(135deg, #8b3a1a, #5c2410); }
+
+  /* Counter badge */
+  .experts-counter {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    z-index: 4;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0.5rem 0.9rem;
+    border-radius: 100px;
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .experts-counter::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: #16a34a;
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.3);
+  }
+
+  /* Expert action cards (right side) */
+  .expert-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .expert-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.3rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .expert-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--saffron);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.3s;
+  }
+  .expert-card:hover {
+    border-color: var(--ink);
+    transform: translateX(4px);
+    box-shadow: 0 15px 30px -15px rgba(26, 20, 16, 0.15);
+  }
+  .expert-card:hover::before { transform: scaleY(1); }
+
+  .expert-illustration {
+    width: 72px;
+    height: 72px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .expert-illustration::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.25;
+    background-image:
+      repeating-linear-gradient(45deg, transparent 0 4px, rgba(255,255,255,0.3) 4px 5px);
+  }
+  .expert-illustration.ill-1 { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); color: var(--saffron-deep); }
+  .expert-illustration.ill-2 { background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); color: var(--indigo-deep); }
+  .expert-illustration.ill-3 { background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%); color: #9d174d; }
+  .expert-illustration.ill-4 { background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); color: #065f46; }
+
+  .expert-card-content { flex: 1; }
+  .expert-card h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.35rem;
+    letter-spacing: -0.01em;
+  }
+  .expert-card p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.5;
+    margin: 0;
+  }
+  .expert-card-cta {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    flex-shrink: 0;
+  }
+  .expert-card-cta .availability {
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.7rem;
+    color: #16a34a;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-align: right;
+  }
+  .expert-card-cta .availability .num {
+    font-family: 'Fraunces', serif;
+    color: var(--ink);
+    font-size: 1.1rem;
+    font-weight: 500;
+    display: block;
+    text-transform: none;
+    letter-spacing: -0.02em;
+  }
+  .expert-card-arrow {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--paper-warm);
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .expert-card:hover .expert-card-arrow {
+    background: var(--ink);
+    color: var(--paper);
+    transform: rotate(-45deg);
+  }
+
+  /* ========== POPULAR SEARCHES ========== */
+  .popular-searches {
+    padding: 5rem 2rem;
+    background: var(--paper);
+    border-top: 1px solid var(--line);
+  }
+  .popular-inner {
+    max-width: 1320px;
+    margin: 0 auto;
+  }
+  .popular-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--line);
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .popular-head h3 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .popular-head h3 em {
+    color: var(--saffron-deep);
+    font-weight: 500;
+  }
+  .popular-head .meta {
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .popular-head .meta::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--saffron);
+    border-radius: 50%;
+  }
+
+  .tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .search-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.55rem 1rem;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    font-size: 0.86rem;
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 400;
+    transition: all 0.2s;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .search-tag:hover {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+    transform: translateY(-2px);
+  }
+  .search-tag svg {
+    opacity: 0;
+    width: 0;
+    transition: all 0.2s;
+  }
+  .search-tag:hover svg {
+    opacity: 1;
+    width: 12px;
+  }
+
+  /* Hot / trending variant */
+  .search-tag.hot {
+    background: var(--paper-warm);
+    border-color: transparent;
+    color: var(--saffron-deep);
+    font-weight: 500;
+  }
+  .search-tag.hot::before {
+    content: '🔥';
+    font-size: 0.9em;
+  }
+  .search-tag.hot:hover {
+    background: var(--saffron);
+    color: white;
+  }
+
+  /* Trending variant */
+  .search-tag.trending {
+    background: rgba(22, 163, 74, 0.08);
+    border-color: transparent;
+    color: #15803d;
+    font-weight: 500;
+  }
+  .search-tag.trending::before {
+    content: '↑';
+    font-weight: 700;
+    font-size: 0.95em;
+  }
+  .search-tag.trending:hover {
+    background: #15803d;
+    color: white;
+  }
+
+  /* Section dividers between tag groups */
+  .tag-group-label {
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin: 1.8rem 0 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+  .tag-group-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+  .tag-group-label:first-of-type { margin-top: 0; }
+
+  /* ========== PAYMENT STATUS TOAST ========== */
+  .pay-toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 1.2rem 1.4rem;
+    box-shadow: 0 25px 50px -15px rgba(26, 20, 16, 0.3);
+    max-width: 360px;
+    z-index: 9999;
+    display: none;
+    animation: slideUp 0.4s ease-out;
+  }
+  .pay-toast.show { display: block; }
+  .pay-toast.success { border-left: 4px solid #16a34a; }
+  .pay-toast.error { border-left: 4px solid #dc2626; }
+  .pay-toast.info { border-left: 4px solid var(--saffron); }
+  .pay-toast .toast-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .pay-toast .toast-body {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .pay-toast .toast-body code {
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.8rem;
+    background: var(--paper-warm);
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    color: var(--ink);
+  }
+  .pay-toast .toast-close {
+    position: absolute;
+    top: 0.7rem;
+    right: 0.8rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 1.2rem;
+    line-height: 1;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ========== HERO ========== */
+  .hero {
+    position: relative;
+    padding: 5rem 2rem 6rem;
+    overflow: hidden;
+  }
+  .hero-inner {
+    max-width: 1320px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 5rem;
+    align-items: center;
+    position: relative;
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    font-size: 0.8rem;
+    color: var(--muted);
+    background: rgba(255,255,255,0.5);
+    margin-bottom: 1.8rem;
+    font-family: 'Geist Mono', monospace;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #16a34a;
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
+  }
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2.5rem, 5.5vw, 4.6rem);
+    line-height: 1.02;
+    font-weight: 400;
+    letter-spacing: -0.035em;
+    margin-bottom: 1.6rem;
+    color: var(--ink);
+  }
+  .hero h1 .accent {
+    font-style: italic;
+    color: var(--saffron-deep);
+    font-weight: 500;
+  }
+  .hero h1 .underline {
+    position: relative;
+    display: inline-block;
+  }
+  .hero h1 .underline::after {
+    content: '';
+    position: absolute;
+    bottom: 0.1em;
+    left: 0;
+    right: 0;
+    height: 0.18em;
+    background: var(--saffron);
+    opacity: 0.35;
+    z-index: -1;
+  }
+  .hero-sub {
+    font-size: 1.18rem;
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 540px;
+    margin-bottom: 2.2rem;
+  }
+  .hero-actions { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 3rem; }
+  .hero-stats {
+    display: flex;
+    gap: 2.8rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--line);
+  }
+  .stat-num {
+    font-family: 'Fraunces', serif;
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+  .stat-num .plus { color: var(--saffron-deep); }
+  .stat-label {
+    font-size: 0.82rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.2rem;
+  }
+
+  /* Hero right - service card stack */
+  .hero-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    border: 1px solid var(--line);
+    box-shadow: 0 30px 60px -25px rgba(26, 20, 16, 0.18);
+    position: relative;
+  }
+  .hero-card::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 21px;
+    padding: 1px;
+    background: linear-gradient(135deg, var(--saffron) 0%, transparent 50%, var(--indigo) 100%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  .card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.4rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px dashed var(--line);
+  }
+  .card-head h3 { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 500; }
+  .card-tag {
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.7rem;
+    background: var(--paper-warm);
+    color: var(--saffron-deep);
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+  }
+  .card-list { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; }
+  .card-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.92rem;
+  }
+  .card-list .name { color: var(--ink); display: flex; align-items: center; gap: 0.6rem; }
+  .card-list .name::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--saffron);
+    border-radius: 1px;
+    transform: rotate(45deg);
+  }
+  .card-list .price { font-family: 'Geist Mono', monospace; color: var(--muted); font-size: 0.85rem; }
+  .card-list .price .strike { text-decoration: line-through; opacity: 0.5; margin-right: 0.4rem; }
+  .card-list .price .live { color: var(--ink); font-weight: 500; }
+  .card-cta {
+    width: 100%;
+    margin-top: 1.6rem;
+    padding: 0.85rem;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    border-radius: 100px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .card-cta:hover { background: var(--saffron-deep); }
+
+  /* Floating decorative elements */
+  .floating-badge {
+    position: absolute;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 0.8rem 1.1rem;
+    box-shadow: 0 15px 30px -15px rgba(26,20,16,0.15);
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 0.85rem;
+  }
+  .floating-badge.b1 {
+    top: -1.5rem;
+    left: -2.5rem;
+    transform: rotate(-4deg);
+  }
+  .floating-badge.b2 {
+    bottom: -1.5rem;
+    right: -1.5rem;
+    transform: rotate(3deg);
+  }
+  .badge-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--paper-warm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--saffron-deep);
+  }
+  .badge-text strong { display: block; font-weight: 500; }
+  .badge-text small { color: var(--muted); font-size: 0.75rem; }
+
+  /* ========== TRUST BAR ========== */
+  .trust-bar {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: var(--paper-warm);
+    padding: 1.8rem 2rem;
+    position: relative;
+  }
+  .trust-inner {
+    max-width: 1320px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .trust-label {
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .trust-logos {
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .trust-logo {
+    font-family: 'Fraunces', serif;
+    font-size: 1.05rem;
+    color: var(--ink);
+    opacity: 0.55;
+    letter-spacing: -0.01em;
+  }
+  .trust-logo.italic { font-style: italic; }
+
+  /* ========== SECTIONS ========== */
+  section { position: relative; z-index: 1; }
+  .section-header {
+    max-width: 720px;
+    margin: 0 auto 4rem;
+    text-align: center;
+  }
+  .section-eyebrow {
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--saffron-deep);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .section-header h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 400;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+  .section-header h2 em { color: var(--saffron-deep); font-weight: 500; }
+  .section-header p { margin-top: 1rem; color: var(--muted); font-size: 1.05rem; }
+
+  /* ========== SERVICES ========== */
+  .services {
+    padding: 6rem 2rem;
+    max-width: 1320px;
+    margin: 0 auto;
+  }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.4rem;
+  }
+  .service-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: var(--saffron);
+    transition: width 0.4s;
+  }
+  .service-card:hover {
+    border-color: var(--ink);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -20px rgba(26,20,16,0.15);
+  }
+  .service-card:hover::before { width: 100%; }
+  .service-num {
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-bottom: 1.4rem;
+  }
+  .service-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--paper-warm);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.4rem;
+    color: var(--saffron-deep);
+  }
+  .service-card h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.35rem;
+    font-weight: 500;
+    margin-bottom: 0.6rem;
+    letter-spacing: -0.01em;
+  }
+  .service-card p {
+    color: var(--muted);
+    font-size: 0.93rem;
+    line-height: 1.6;
+    margin-bottom: 1.4rem;
+  }
+  .service-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1.2rem;
+    border-top: 1px dashed var(--line);
+    font-size: 0.85rem;
+  }
+  .service-price { font-family: 'Geist Mono', monospace; color: var(--ink); font-weight: 500; }
+  .service-arrow {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+  }
+  .service-card:hover .service-arrow {
+    transform: rotate(-45deg);
+    background: var(--saffron-deep);
+  }
+
+  /* ========== PROCESS ========== */
+  .process {
+    background: var(--indigo-deep);
+    color: var(--paper);
+    padding: 6rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .process::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 10% 20%, rgba(217, 119, 6, 0.08) 0%, transparent 30%),
+      radial-gradient(circle at 90% 80%, rgba(217, 119, 6, 0.06) 0%, transparent 30%);
+  }
+  .process-inner {
+    max-width: 1320px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .process .section-header h2 { color: var(--paper); }
+  .process .section-header p { color: rgba(250, 246, 239, 0.65); }
+  .process .section-eyebrow { color: #f59e0b; }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    position: relative;
+  }
+  .step {
+    padding: 2rem 1.5rem;
+    border-left: 1px solid rgba(250, 246, 239, 0.15);
+    position: relative;
+  }
+  .step:first-child { border-left: none; }
+  .step-num {
+    font-family: 'Fraunces', serif;
+    font-size: 3.5rem;
+    font-weight: 400;
+    color: var(--saffron);
+    line-height: 1;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+  }
+  .step h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-bottom: 0.6rem;
+    color: var(--paper);
+  }
+  .step p {
+    color: rgba(250, 246, 239, 0.65);
+    font-size: 0.93rem;
+    line-height: 1.6;
+  }
+
+  /* ========== PRICING ========== */
+  .pricing {
+    padding: 6rem 2rem;
+    max-width: 1320px;
+    margin: 0 auto;
+  }
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.4rem;
+  }
+  .price-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    position: relative;
+    transition: transform 0.3s;
+  }
+  .price-card:hover { transform: translateY(-4px); }
+  .price-card.featured {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+    transform: scale(1.03);
+  }
+  .price-card.featured:hover { transform: scale(1.03) translateY(-4px); }
+  .featured-tag {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--saffron);
+    color: white;
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.7rem;
+    padding: 0.3rem 0.9rem;
+    border-radius: 100px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .price-name {
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+    opacity: 0.7;
+  }
+  .price-amount {
+    font-family: 'Fraunces', serif;
+    font-size: 3rem;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+  .price-amount .currency { font-size: 1.3rem; vertical-align: super; opacity: 0.6; }
+  .price-amount .period { font-size: 0.9rem; font-family: 'Geist', sans-serif; font-weight: 400; opacity: 0.6; }
+  .price-desc { font-size: 0.92rem; opacity: 0.7; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--line); }
+  .price-card.featured .price-desc { border-color: rgba(250, 246, 239, 0.15); }
+  .price-features { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; margin-bottom: 2rem; }
+  .price-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    font-size: 0.93rem;
+  }
+  .price-features li::before {
+    content: '';
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--saffron);
+    flex-shrink: 0;
+    margin-top: 2px;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 8L7 11L12 5' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  }
+  .price-cta {
+    width: 100%;
+    padding: 0.9rem;
+    border-radius: 100px;
+    font-family: inherit;
+    font-size: 0.93rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    transition: all 0.2s;
+  }
+  .price-card.featured .price-cta { background: var(--saffron); color: white; border-color: var(--saffron); }
+  .price-card.featured .price-cta:hover { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+  .price-cta:hover { background: var(--ink); color: var(--paper); }
+
+  /* ========== TESTIMONIAL ========== */
+  .testimonial {
+    background: var(--paper-warm);
+    padding: 6rem 2rem;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .testimonial-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .testimonial-quote {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    line-height: 1.3;
+    font-weight: 400;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
+  .testimonial-quote::before {
+    content: '"';
+    position: absolute;
+    top: -3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 8rem;
+    color: var(--saffron);
+    opacity: 0.25;
+    font-family: 'Fraunces', serif;
+    line-height: 1;
+  }
+  .testimonial-author {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
+  .author-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--saffron), var(--rust));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+  }
+  .author-info { text-align: left; }
+  .author-name { font-weight: 500; color: var(--ink); }
+  .author-role { font-size: 0.85rem; color: var(--muted); }
+
+  /* ========== CTA ========== */
+  .cta-section {
+    padding: 7rem 2rem;
+    text-align: center;
+    position: relative;
+  }
+  .cta-inner {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+  .cta-inner h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: 1.5rem;
+    color: var(--ink);
+  }
+  .cta-inner h2 em { color: var(--saffron-deep); }
+  .cta-inner p {
+    font-size: 1.15rem;
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+  }
+
+  /* ========== FOOTER ========== */
+  footer {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 5rem 2rem 2rem;
+  }
+  .footer-inner {
+    max-width: 1320px;
+    margin: 0 auto;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(250, 246, 239, 0.15);
+  }
+  .footer-brand .logo { color: var(--paper); margin-bottom: 1rem; }
+  .footer-brand p { color: rgba(250, 246, 239, 0.6); font-size: 0.93rem; line-height: 1.6; max-width: 320px; }
+  .footer-col h5 {
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--saffron);
+    margin-bottom: 1.2rem;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+  .footer-col a {
+    color: rgba(250, 246, 239, 0.7);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--saffron); }
+  .footer-bottom {
+    padding-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: 0.85rem;
+    color: rgba(250, 246, 239, 0.5);
+  }
+
+  /* ========== ANIMATIONS ========== */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-eyebrow, .hero h1, .hero-sub, .hero-actions, .hero-stats {
+    animation: fadeUp 0.8s ease-out both;
+  }
+  .hero h1 { animation-delay: 0.1s; }
+  .hero-sub { animation-delay: 0.2s; }
+  .hero-actions { animation-delay: 0.3s; }
+  .hero-stats { animation-delay: 0.4s; }
+  .hero-card { animation: fadeUp 1s 0.3s ease-out both; }
+
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 968px) {
+    .nav-links { display: none; }
+    .mega-panel { display: none; }
+    .hero-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .services-grid, .pricing-grid { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .price-card.featured { transform: none; }
+    .floating-badge.b1, .floating-badge.b2 { display: none; }
+    .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+    .why-panel { grid-template-columns: 1fr; }
+    .why-visual { min-height: 220px; }
+    .experts-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .experts-visual { min-height: 380px; padding: 1.5rem; }
+    .expert-main-card { width: 240px; padding: 1.4rem; }
+    .expert-chip.c1, .expert-chip.c2, .expert-chip.c3, .expert-chip.c4 { display: none; }
+    .expert-card { padding: 1.2rem; gap: 1rem; }
+    .expert-illustration { width: 56px; height: 56px; }
+    .expert-card-cta .availability { display: none; }
+  }
+  @media (max-width: 580px) {
+    .steps { grid-template-columns: 1fr; }
+    .step { border-left: none; border-top: 1px solid rgba(250, 246, 239, 0.15); }
+    .step:first-child { border-top: none; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .hero { padding: 3rem 1.2rem 4rem; }
+    .nav-inner { padding: 1rem 1.2rem; }
+    .trust-inner { justify-content: center; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">
+      <span class="logo-mark"></span>
+      <span>IndiaWise<span>Filings</span></span>
+    </a>
+    <ul class="nav-links">
+
+      <!-- STARTUP -->
+      <li class="has-mega">
+        <a href="#" class="mega-trigger">Startup
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+        </a>
+        <div class="mega-panel">
+          <div class="mega-inner">
+            <div class="mega-col">
+              <h6>Company Types</h6>
+              <ul>
+                <li><a href="/services/private-limited-company.html">Private Limited Company<span class="popular">Popular</span></a></li>
+                <li><a href="/services/limited-liability-partnership.html">Limited Liability Partnership</a></li>
+                <li><a href="/services/one-person-company.html">One Person Company</a></li>
+                <li><a href="/services/partnership-firm.html">Partnership Firm</a></li>
+                <li><a href="/services/sole-proprietorship.html">Sole Proprietorship</a></li>
+                <li><a href="/services/nidhi-company.html">Nidhi Company</a></li>
+                <li><a href="/services/producer-company.html">Producer Company</a></li>
+              </ul>
+            </div>
+            <div class="mega-col">
+              <h6>Special Entities</h6>
+              <ul>
+                <li><a href="/services/section-8-company.html">Section 8 Company</a></li>
+                <li><a href="/services/indian-subsidiary.html">Indian Subsidiary</a></li>
+                <li><a href="/services/foreign-subsidiary.html">Foreign Subsidiary</a></li>
+                <li><a href="/services/public-limited-company.html">Public Limited Company</a></li>
+                <li><a href="/services/trust-registration.html">Trust Registration</a></li>
+                <li><a href="/services/society-registration.html">Society Registration</a></li>
+              </ul>
+            </div>
+            <div class="mega-col">
+              <h6>Post-Registration</h6>
+              <ul>
+                <li><a href="/services/din-application.html">DIN Application</a></li>
+                <li><a href="/services/dsc-for-directors.html">DSC for Directors</a></li>
+                <li><a href="/services/commencement-of-business.html">Commencement of Business</a></li>
+                <li><a href="/services/add-director.html">Add Director</a></li>
+                <li><a href="/services/remove-director.html">Remove Director</a></li>
+                <li><a href="/services/change-registered-office.html">Change Registered Office</a></li>
+                <li><a href="/services/increase-capital.html">Increase Capital</a></li>
+              </ul>
+            </div>
+            <div class="mega-promo">
+              <div class="promo-tag">Limited Offer</div>
+              <h6>Pvt Ltd at ₹7,999</h6>
+              <p>Free PAN, TAN, GST registration + 2 DSCs included. Ready in 10 days.</p>
+              <a href="#" class="promo-link">Start incorporation
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </a>
+            </div>
+          </div>
+          <div class="mega-footer">
+            <div class="left">— 40+ startup registration services</div>
+            <div class="right"><a href="#">View all startup services
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+            </a></div>
+          </div>
+        </div>
+      </li>
+
+      <!-- REGISTRATIONS -->
+      <li class="has-mega">
+        <a href="#" class="mega-trigger">Registrations
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+        </a>
+        <div class="mega-panel">
+          <div class="mega-inner">
+            <div class="mega-col">
+              <h6>Business Licenses</h6>
+              <ul>
+                <li><a href="/services/startup-india.html">Startup India</a></li>
+                <li><a href="/services/trade-license.html">Trade License</a></li>
+                <li><a href="/services/fssai-registration.html">FSSAI Registration<span class="popular">Popular</span></a></li>
+                <li><a href="/services/fssai-license.html">FSSAI License</a></li>
+                <li><a href="/services/halal-certification.html">Halal Certification</a></li>
+                <li><a href="/services/icegate-registration.html">ICEGATE Registration</a></li>
+                <li><a href="/services/import-export-code.html">Import Export Code</a></li>
+              </ul>
+            </div>
+            <div class="mega-col">
+              <h6>Statutory</h6>
+              <ul>
+                <li><a href="/services/legal-entity-identifier.html">Legal Entity Identifier</a></li>
+                <li><a href="/services/iso-registration.html">ISO Registration</a></li>
+                <li><a href="/services/pf-registration.html">PF Registration</a></li>
+                <li><a href="/services/esi-registration.html">ESI Registration</a></li>
+                <li><a href="/services/professional-tax.html">Professional Tax</a></li>
+                <li><a href="/services/rcmc-registration.html">RCMC Registration</a></li>
+                <li><a href="/services/tn-rera-agents.html">TN RERA Agents</a></li>
+              </ul>
+            </div>
+            <div class="mega-col">
+              <h6>NGO & Tax Exempt</h6>
+              <ul>
+                <li><a href="/services/12a-and-80g-registration.html">12A and 80G Registration</a></li>
+                <li><a href="/services/12a-registration.html">12A Registration</a></li>
+                <li><a href="/services/80g-registration.html">80G Registration</a></li>
+                <li><a href="/services/barcode-registration.html">Barcode Registration</a></li>
+                <li><a href="/services/bis-registration.html">BIS Registration</a></li>
+                <li><a href="/services/certificate-of-incumbency.html">Certificate of Incumbency</a></li>
+                <li><a href="/services/darpan-registration.html">Darpan Registration</a></li>
+              </ul>
+            </div>
+            <div class="mega-col">
+              <h6>Other Services</h6>
+              <ul>
+                <li><a href="/services/digital-signature.html">Digital Signature<span class="popular">Popular</span></a></li>
+                <li><a href="/services/shop-act-registration.html">Shop Act Registration</a></li>
+                <li><a href="/services/udyam-registration.html">Udyam Registration<span class="new">New</span></a></li>
+                <li><a href="/services/fire-license.html">Fire License</a></li>
+                <li><a href="/services/legal-name-change.html">Legal Name Change</a></li>
+                <li><a href="/services/water-testing.html">Water Testing</a></li>
+                <li><a href="/services/food-testing.html">Food Testing</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="mega-footer">
+            <div class="left">— 28 registration services available</div>
+            <div class="right"><a href="#">View all registrations
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+            </a></div>
+          </div>
+        </div>
+      </li>
+
+      <!-- TRADEMARK -->
+      <li class="has-mega">
+        <a href="#" class="mega-trigger">Trademark
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+        </a>
+        <div class="mega-panel">
+          <div class="mega-inner">
+            <div class="mega-col">
+              <h6>Trademark</h6>
+              <ul>
+                <li><a href="/services/trademark-search.html">Trademark Search<span class="popular">Free</span></a></li>
+                <li><a href="/services/trademark-registration.html">Trademark Registration</a></li>
+                <li><a href="/services/trademark-objection.html">Trademark Objection</a></li>
+                <li><a href="/services/trademark-opposition.html">Trademark Opposition</a></li>
+                <li><a href="/services/trademark-renewal.html">Trademark Renewal</a></li>
+                <li><a href="/services/trademark-assignment.html">Trademark Assignment</a></li>
+                <li><a href="/services/trademark-rectification.html">Trademark Rectification</a></li>
+              </ul>
+            </div>
+            <div class="mega-col">
+              <h6>International</h6>
+              <ul>
+                <li><a href="/services/usa-trademark.html">USA Trademark</a></li>
+                <li><a href="/services/uk-trademark.html">UK Trademark</a></li>
+                <li><a href="/services/eu-trademark.html">EU Trademark</a></li>
+                <li><a href="/services/uae-trademark.html">UAE Trademark</a></li>
+                <li><a href="/services/international-trademark.html">International Trademark</a></li>
+                <li><a href="/services/madrid-protocol-filing.html">Madrid Protocol Filing</a></li>
+              </ul>
+            </div>
+            <div class="mega-col">
+              <h6>Copyright & Patent</h6>
+              <ul>
+                <li><a href="/services/copyright-registration.html">Copyright Registration</a></li>
+                <li><a href="/services/copyright-objection.html">Copyright Objection</a></li>
+                <li><a href="/services/patent-registration.html">Patent Registration</a></li>
+                <li><a href="/services/patent-search.html">Patent Search</a></li>
+                <li><a href="/services/design-registration.html">Design Registration</a></li>
+                <li><a href="/services/geographical-indication.html">Geographical Indication</a></li>
+              </ul>
+            </div>
+            <div class="mega-promo">
+              <div class="promo-tag">Free Tool</div>
+              <h6>Free Trademark Search</h6>
+              <p>Check if your brand name is available across all 45 trademark classes in 60 seconds.</p>
+              <a href="#" class="promo-link">Run free search
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </a>
+            </div>
+          </div>
+          <div class="mega-footer">
+            <div class="left">— Protect your brand globally</div>
+            <div class="right"><a href="#">View all IP services
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+            </a></div>
+          </div>
+        </div>
+      </li>
+
+      <!-- GST -->
+      <li class="has-mega">
+        <a href="#" class="mega-trigger">GST
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+        </a>
+        <div class="mega-panel">
+          <div class="mega-inner">
+            <div class="mega-col">
+              <h6>GST Registration</h6>
+              <ul>
+                <li><a href="/services/gst-registration.html">New GST Registration<span class="popular">Popular</span></a></li>
+                <li><a href="/services/gst-amendment.html">GST Amendment</a></li>
+                <li><a href="/services/gst-cancellation.html">GST Cancellation</a></li>
+                <li><a href="/services/gst-revocation.html">GST Revocation</a></li>
+                <li><a href="/services/composition-scheme.html">Composition Scheme</a></li>
+                <li><a href="/services/casual-taxable-person.html">Casual Taxable Person</a></li>
+              </ul>
+            </div>
+            <div class="mega-col">
+              <h6>GST Returns</h6>
+              <ul>
+                <li><a href="/services/gstr-1-filing.html">GSTR-1 Filing</a></li>
+                <li><a href="/services/gstr-3b-filing.html">GSTR-3B Filing</a></li>
+                <li><a href="/services/gstr-9-annual-return.html">GSTR-9 Annual Return</a></li>
+                <li><a href="/services/gstr-9c-audit.html">GSTR-9C Audit</a></li>
+                <li><a href="/services/nil-return-filing.html">Nil Return Filing</a></li>
+                <li><a href="/services/composition-return.html">Composition Return</a></li>
+              </ul>
+            </div>
+            <div class="mega-col">
+              <h6>GST Refunds & Notice</h6>
+              <ul>
+                <li><a href="/services/gst-refund.html">GST Refund</a></li>
+                <li><a href="/services/lut-for-exports.html">LUT for Exports</a></li>
+                <li><a href="/services/e-invoicing.html">E-Invoicing</a></li>
+                <li><a href="/services/e-way-bill.html">E-Way Bill</a></li>
+                <li><a href="/services/gst-notice-reply.html">GST Notice Reply</a></li>
+                <li><a href="/services/gst-appeal.html">GST Appeal</a></li>
+              </ul>
+            </div>
+            <div class="mega-promo">
+              <div class="promo-tag">Monthly Plan</div>
+              <h6>GST Filing at ₹999/mo</h6>
+              <p>Dedicated CA, monthly GSTR-1 & 3B, reconciliation, and notice response — all included.</p>
+              <a href="#" class="promo-link">Start GST plan
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </a>
+            </div>
+          </div>
+          <div class="mega-footer">
+            <div class="left">— Filed 50,000+ GST returns</div>
+            <div class="right"><a href="#">View all GST services
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+            </a></div>
+          </div>
+        </div>
+      </li>
+
+      <!-- INCOME TAX -->
+      <li class="has-mega">
+        <a href="#" class="mega-trigger">Income Tax
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+        </a>
+        <div class="mega-panel">
+          <div class="mega-inner">
+            <div class="mega-col">
+              <h6>ITR Filing</h6>
+              <ul>
+                <li><a href="/services/itr-salaried.html">Salaried Individuals<span class="popular">Popular</span></a></li>
+                <li><a href="/services/itr-freelancer.html">Freelancer ITR</a></li>
+                <li><a href="/services/itr-business.html">Business ITR</a></li>
+                <li><a href="/services/itr-nri.html">NRI Tax Filing</a></li>
+                <li><a href="/services/itr-capital-gains.html">Capital Gains Filing</a></li>
+                <li><a href="/services/itr-crypto.html">Crypto Tax Filing<span class="new">New</span></a></li>
+              </ul>
+            </div>
+            <div class="mega-col">
+              <h6>TDS & Advance Tax</h6>
+              <ul>
+                <li><a href="/services/tds-return-filing.html">TDS Return Filing</a></li>
+                <li><a href="/services/tds-on-property.html">TDS on Property</a></li>
+                <li><a href="/services/tcs-filing.html">TCS Filing</a></li>
+                <li><a href="/services/form-15ca-cb.html">Form 15CA/CB</a></li>
+                <li><a href="/services/advance-tax-calculation.html">Advance Tax Calculation</a></li>
+                <li><a href="/services/form-16-generation.html">Form 16 Generation</a></li>
+              </ul>
+            </div>
+            <div class="mega-col">
+              <h6>Notices & Audit</h6>
+              <ul>
+                <li><a href="/services/income-tax-notice-reply.html">Income Tax Notice Reply</a></li>
+                <li><a href="/services/tax-audit.html">Tax Audit</a></li>
+                <li><a href="/services/transfer-pricing-audit.html">Transfer Pricing Audit</a></li>
+                <li><a href="/services/tax-refund-status.html">Tax Refund Status</a></li>
+                <li><a href="/services/pan-application.html">PAN Application</a></li>
+                <li><a href="/services/tan-application.html">TAN Application</a></li>
+              </ul>
+            </div>
+            <div class="mega-promo">
+              <div class="promo-tag">CA Assisted</div>
+              <h6>ITR Filing from ₹999</h6>
+              <p>Maximize deductions with a CA review. Filed within 24 hours. Pay only after review.</p>
+              <a href="#" class="promo-link">File your ITR
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </a>
+            </div>
+          </div>
+          <div class="mega-footer">
+            <div class="left">— Last filing date approaching</div>
+            <div class="right"><a href="#">View all tax services
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+            </a></div>
+          </div>
+        </div>
+      </li>
+
+      <!-- MCA -->
+      <li class="has-mega">
+        <a href="#" class="mega-trigger">MCA
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+        </a>
+        <div class="mega-panel">
+          <div class="mega-inner">
+            <div class="mega-col">
+              <h6>Annual Compliance</h6>
+              <ul>
+                <li><a href="/services/roc-annual-filing.html">ROC Annual Filing<span class="popular">Popular</span></a></li>
+                <li><a href="/services/llp-annual-filing.html">LLP Annual Filing</a></li>
+                <li><a href="/services/director-kyc.html">Director KYC</a></li>
+                <li><a href="/services/dpt-3-filing.html">DPT-3 Filing</a></li>
+                <li><a href="/services/msme-form-1.html">MSME Form 1</a></li>
+                <li><a href="/services/board-meeting-minutes.html">Board Meeting Minutes</a></li>
+              </ul>
+            </div>
+            <div class="mega-col">
+              <h6>Company Changes</h6>
+              <ul>
+                <li><a href="/services/company-name-change.html">Company Name Change</a></li>
+                <li><a href="/services/change-of-object.html">Change of Object</a></li>
+                <li><a href="/services/add-director.html">Add / Remove Director</a></li>
+                <li><a href="/services/share-transfer.html">Share Transfer</a></li>
+                <li><a href="/services/increase-authorized-capital.html">Increase Authorized Capital</a></li>
+                <li><a href="/services/conversion-of-company.html">Conversion of Company</a></li>
+              </ul>
+            </div>
+            <div class="mega-col">
+              <h6>Winding Up</h6>
+              <ul>
+                <li><a href="/services/company-strike-off.html">Company Strike Off</a></li>
+                <li><a href="/services/llp-closure.html">LLP Closure</a></li>
+                <li><a href="/services/din-reactivation.html">DIN Reactivation</a></li>
+                <li><a href="/services/ccfs-scheme.html">CCFS Scheme</a></li>
+                <li><a href="/services/dormant-company-status.html">Dormant Company Status</a></li>
+                <li><a href="/services/revival-of-company.html">Revival of Company</a></li>
+              </ul>
+            </div>
+            <div class="mega-promo">
+              <div class="promo-tag">Avoid Penalty</div>
+              <h6>Annual ROC at ₹9,999</h6>
+              <p>Late filing penalties are ₹100/day. Stay compliant with our managed ROC service.</p>
+              <a href="#" class="promo-link">Get ROC plan
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </a>
+            </div>
+          </div>
+          <div class="mega-footer">
+            <div class="left">— Never miss a deadline</div>
+            <div class="right"><a href="#">View all MCA services
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+            </a></div>
+          </div>
+        </div>
+      </li>
+
+      <!-- COMPLIANCE -->
+      <li class="has-mega">
+        <a href="#" class="mega-trigger">Compliance
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+        </a>
+        <div class="mega-panel">
+          <div class="mega-inner">
+            <div class="mega-col">
+              <h6>Bookkeeping</h6>
+              <ul>
+                <li><a href="/services/accounting-services.html">Accounting Services<span class="popular">Popular</span></a></li>
+                <li><a href="/services/payroll-management.html">Payroll Management</a></li>
+                <li><a href="/services/bookkeeping-outsourcing.html">Bookkeeping Outsourcing</a></li>
+                <li><a href="/services/financial-statements.html">Financial Statements</a></li>
+                <li><a href="/services/mis-reports.html">MIS Reports</a></li>
+                <li><a href="/services/virtual-cfo-service.html">Virtual CFO Service</a></li>
+              </ul>
+            </div>
+            <div class="mega-col">
+              <h6>Audit & Review</h6>
+              <ul>
+                <li><a href="/services/internal-audit.html">Internal Audit</a></li>
+                <li><a href="/services/statutory-audit.html">Statutory Audit</a></li>
+                <li><a href="/services/gst-audit.html">GST Audit</a></li>
+                <li><a href="/services/stock-audit.html">Stock Audit</a></li>
+                <li><a href="/services/due-diligence.html">Due Diligence</a></li>
+                <li><a href="/services/forensic-audit.html">Forensic Audit</a></li>
+              </ul>
+            </div>
+            <div class="mega-col">
+              <h6>Consulting</h6>
+              <ul>
+                <li><a href="/services/ca-consultation.html">CA Consultation</a></li>
+                <li><a href="/services/lawyer-consultation.html">Lawyer Consultation</a></li>
+                <li><a href="/services/cs-consultation.html">CS Consultation</a></li>
+                <li><a href="/services/hr-payroll-service.html">HR & Payroll Service</a></li>
+                <li><a href="/services/virtual-office.html">Virtual Office</a></li>
+                <li><a href="/services/notary-service.html">Notary Service</a></li>
+              </ul>
+            </div>
+            <div class="mega-col">
+              <h6>Drafting</h6>
+              <ul>
+                <li><a href="/services/founders-agreement.html">Founders Agreement</a></li>
+                <li><a href="/services/employment-agreement.html">Employment Agreement</a></li>
+                <li><a href="/services/nda-drafting.html">NDA Drafting</a></li>
+                <li><a href="/services/vendor-agreement.html">Vendor Agreement</a></li>
+                <li><a href="/services/rental-agreement.html">Rental Agreement</a></li>
+                <li><a href="/services/shareholders-agreement.html">Shareholders Agreement</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="mega-footer">
+            <div class="left">— End-to-end business compliance</div>
+            <div class="right"><a href="#">View all compliance services
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+            </a></div>
+          </div>
+        </div>
+      </li>
+
+      <!-- GLOBAL -->
+      <li class="has-mega">
+        <a href="#" class="mega-trigger">Global
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+        </a>
+        <div class="mega-panel">
+          <div class="mega-inner">
+            <div class="mega-col">
+              <h6>🇦🇪 UAE</h6>
+              <ul>
+                <li><a href="/services/uae-company-registration.html">UAE Company Registration<span class="popular">Popular</span></a></li>
+                <li><a href="/services/uae-free-zone-setup.html">UAE Free Zone Setup</a></li>
+                <li><a href="/services/uae-mainland-setup.html">UAE Mainland Setup</a></li>
+                <li><a href="/services/ajman-free-zone.html">Ajman Free Zone</a></li>
+                <li><a href="/services/uae-ecommerce-license.html">UAE eCommerce License</a></li>
+                <li><a href="/services/uae-attestation-mofa.html">UAE Attestation MOFA</a></li>
+              </ul>
+            </div>
+            <div class="mega-col">
+              <h6>🇺🇸 USA</h6>
+              <ul>
+                <li><a href="/services/usa-business-setup.html">USA Business Setup</a></li>
+                <li><a href="/services/delaware-incorporation.html">Delaware Incorporation</a></li>
+                <li><a href="/services/wyoming-llc.html">Wyoming LLC</a></li>
+                <li><a href="/services/usa-trademark.html">USA Trademark</a></li>
+                <li><a href="/services/ein-application.html">EIN Application</a></li>
+                <li><a href="/services/usa-tax-filing.html">USA Tax Filing</a></li>
+              </ul>
+            </div>
+            <div class="mega-col">
+              <h6>🇬🇧 UK & 🇸🇬 Singapore</h6>
+              <ul>
+                <li><a href="/services/uk-company-registration.html">UK Company Registration</a></li>
+                <li><a href="/services/singapore-incorporation.html">Singapore Incorporation</a></li>
+                <li><a href="/services/uk-vat-registration.html">UK VAT Registration</a></li>
+                <li><a href="/services/singapore-gst.html">Singapore GST</a></li>
+                <li><a href="/services/international-trademark.html">International Trademark</a></li>
+                <li><a href="/services/cross-border-tax.html">Cross-Border Tax</a></li>
+              </ul>
+            </div>
+            <div class="mega-promo">
+              <div class="promo-tag">Featured</div>
+              <h6>UAE Company in 7 days</h6>
+              <p>Free Zone setup from AED 5,500. Includes trade license, visa, and bank account.</p>
+              <a href="#" class="promo-link">Start UAE setup
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </a>
+            </div>
+          </div>
+          <div class="mega-footer">
+            <div class="left">— Expand your business worldwide</div>
+            <div class="right"><a href="#">View all global services
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+            </a></div>
+          </div>
+        </div>
+      </li>
+
+      <li><a href="#">Refer & Earn 🎁</a></li>
+      <li><a href="#">We're Hiring! 🚀</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#" class="btn btn-ghost">Sign in</a>
+      <a href="#" class="btn btn-primary">Get started →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-eyebrow">Trusted by 12,000+ Indian businesses</div>
+      <h1>
+        Compliance,<br>
+        <span class="accent">simplified</span> for<br>
+        <span class="underline">Indian businesses.</span>
+      </h1>
+      <p class="hero-sub">
+        Company registration, GST, ITR, and trademark filing — handled by verified CAs and CS professionals. Fixed pricing. Real-time tracking. Zero government office visits.
+      </p>
+      <div class="hero-actions">
+        <a href="#pricing" class="btn btn-saffron">Start your filing →</a>
+        <a href="#experts" class="btn btn-ghost">Talk to an advisor</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">12,000<span class="plus">+</span></div>
+          <div class="stat-label">Businesses served</div>
+        </div>
+        <div>
+          <div class="stat-num">48<span class="plus">hr</span></div>
+          <div class="stat-label">Avg. turnaround</div>
+        </div>
+        <div>
+          <div class="stat-num">4.8<span class="plus">★</span></div>
+          <div class="stat-label">Customer rating</div>
+        </div>
+      </div>
+    </div>
+    <div style="position: relative;">
+      <div class="floating-badge b1">
+        <div class="badge-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="badge-text">
+          <strong>Verified CAs</strong>
+          <small>ICAI registered</small>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="card-head">
+          <h3>Most-filed this week</h3>
+          <span class="card-tag">LIVE</span>
+        </div>
+        <ul class="card-list">
+          <li>
+            <span class="name">Private Limited Company</span>
+            <span class="price"><span class="strike">₹12,999</span><span class="live">₹7,999</span></span>
+          </li>
+          <li>
+            <span class="name">GST Registration</span>
+            <span class="price"><span class="strike">₹2,499</span><span class="live">₹1,499</span></span>
+          </li>
+          <li>
+            <span class="name">Trademark Filing</span>
+            <span class="price"><span class="strike">₹6,500</span><span class="live">₹4,999</span></span>
+          </li>
+          <li>
+            <span class="name">ITR Filing (Business)</span>
+            <span class="price"><span class="strike">₹3,999</span><span class="live">₹2,499</span></span>
+          </li>
+          <li>
+            <span class="name">LLP Registration</span>
+            <span class="price"><span class="strike">₹9,999</span><span class="live">₹5,999</span></span>
+          </li>
+        </ul>
+        <button class="card-cta">Compare all services →</button>
+      </div>
+      <div class="floating-badge b2">
+        <div class="badge-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2v20M2 12h20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="badge-text">
+          <strong>48-hour delivery</strong>
+          <small>Or money back</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-inner">
+    <div class="trust-label">Featured in</div>
+    <div class="trust-logos">
+      <div class="trust-logo italic">YourStory</div>
+      <div class="trust-logo">Economic Times</div>
+      <div class="trust-logo italic">Inc42</div>
+      <div class="trust-logo">Mint</div>
+      <div class="trust-logo italic">Entrepreneur India</div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-header">
+    <div class="section-eyebrow">— Our Services —</div>
+    <h2>Everything you need, <em>from incorporation to compliance.</em></h2>
+    <p>One platform for every filing your business will ever need.</p>
+  </div>
+  <div class="services-grid">
+
+    <div class="service-card">
+      <div class="service-num">01 / Startup</div>
+      <div class="service-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 9h.01M15 9h.01M9 13h.01M15 13h.01M9 17h.01M15 17h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </div>
+      <h3>Company Registration</h3>
+      <p>Private Limited, LLP, One Person Company, or Partnership Firm — registered with MCA in under 10 working days.</p>
+      <div class="service-meta">
+        <span class="service-price">From ₹7,999</span>
+        <span class="service-arrow">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+        </span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-num">02 / Tax</div>
+      <div class="service-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 14l2 2 4-4M20 7l-8 8-5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.8"/></svg>
+      </div>
+      <h3>GST Registration & Filing</h3>
+      <p>End-to-end GST compliance — from new registration to monthly GSTR-1 and GSTR-3B filings, handled monthly.</p>
+      <div class="service-meta">
+        <span class="service-price">From ₹1,499</span>
+        <span class="service-arrow">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+        </span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-num">03 / Tax</div>
+      <div class="service-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zM14 2v6h6M9 13h6M9 17h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h3>Income Tax Filing</h3>
+      <p>ITR for salaried individuals, freelancers, and businesses. Maximize deductions with CA-assisted review every step.</p>
+      <div class="service-meta">
+        <span class="service-price">From ₹999</span>
+        <span class="service-arrow">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+        </span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-num">04 / IP</div>
+      <div class="service-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 7v10l8 5 8-5V7l-8-5zM12 12l8-5M12 12v10M12 12L4 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h3>Trademark Registration</h3>
+      <p>Protect your brand name, logo, or tagline. Free trademark search included with every filing application.</p>
+      <div class="service-meta">
+        <span class="service-price">From ₹4,999</span>
+        <span class="service-arrow">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+        </span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-num">05 / Compliance</div>
+      <div class="service-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </div>
+      <h3>MCA Annual Compliance</h3>
+      <p>Annual ROC filings, director KYC, board resolutions, and statutory registers — never miss a deadline again.</p>
+      <div class="service-meta">
+        <span class="service-price">From ₹9,999/yr</span>
+        <span class="service-arrow">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+        </span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-num">06 / Licenses</div>
+      <div class="service-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="13" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 2v4M16 2v4M3 10h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </div>
+      <h3>FSSAI, Udyam & IEC</h3>
+      <p>Food licenses, MSME Udyam registration, Import-Export Code, Shop & Establishment — all your licenses in one place.</p>
+      <div class="service-meta">
+        <span class="service-price">From ₹1,999</span>
+        <span class="service-arrow">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+        </span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="process-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">— The Process —</div>
+      <h2>Four steps. <em>That's it.</em></h2>
+      <p>We've made government compliance feel as simple as ordering takeout.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h4>Choose your service</h4>
+        <p>Browse fixed-price packages or chat with an advisor to find what fits your business.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h4>Upload documents</h4>
+        <p>Send PAN, Aadhaar, and address proof through our secure portal — bank-grade encryption.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h4>We handle filing</h4>
+        <p>Our CA or CS files with MCA, GST, or IT department directly. You're updated at every stage.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h4>Get your certificate</h4>
+        <p>Digitally delivered to your dashboard. Originals couriered if required, free across India.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="section-header">
+    <div class="section-eyebrow">— Pricing —</div>
+    <h2>Honest packages. <em>No surprise fees.</em></h2>
+    <p>Government fees charged at cost. Whatever we quote is what you pay.</p>
+  </div>
+  <div class="pricing-grid">
+
+    <div class="price-card">
+      <div class="price-name">Starter</div>
+      <div class="price-amount"><span class="currency">₹</span>1,499<span class="period">/filing</span></div>
+      <p class="price-desc">Perfect for individuals and small proprietors filing one-time registrations.</p>
+      <ul class="price-features">
+        <li>GST registration</li>
+        <li>Udyam (MSME) certificate</li>
+        <li>ITR for salaried individuals</li>
+        <li>Email support within 24 hrs</li>
+        <li>Document checklist included</li>
+      </ul>
+      <button class="price-cta" data-pay="1499" data-plan="Starter" data-desc="Single filing service (GST / Udyam / ITR)">Choose Starter</button>
+    </div>
+
+    <div class="price-card featured">
+      <div class="featured-tag">Most Popular</div>
+      <div class="price-name">Growth</div>
+      <div class="price-amount"><span class="currency">₹</span>7,999<span class="period">/filing</span></div>
+      <p class="price-desc">For startups and growing businesses ready to incorporate and stay compliant.</p>
+      <ul class="price-features">
+        <li>Private Limited Company registration</li>
+        <li>2 DSCs + 2 DINs included</li>
+        <li>Free PAN, TAN, GST registration</li>
+        <li>Dedicated CA advisor on WhatsApp</li>
+        <li>First-year compliance reminders</li>
+        <li>Trademark search free of cost</li>
+      </ul>
+      <button class="price-cta" data-pay="7999" data-plan="Growth" data-desc="Pvt Ltd Company Registration + DSC + PAN + TAN + GST">Choose Growth</button>
+    </div>
+
+    <div class="price-card">
+      <div class="price-name">Scale</div>
+      <div class="price-amount"><span class="currency">₹</span>24,999<span class="period">/year</span></div>
+      <p class="price-desc">Full-year compliance for funded startups and established businesses.</p>
+      <ul class="price-features">
+        <li>Everything in Growth, plus:</li>
+        <li>Monthly GST filings (12 months)</li>
+        <li>Annual ROC compliance</li>
+        <li>Director KYC + DPT-3</li>
+        <li>Quarterly CA review call</li>
+        <li>Priority filing turnaround</li>
+      </ul>
+      <button class="price-cta" data-pay="24999" data-plan="Scale" data-desc="Annual compliance bundle (12 months GST + ROC + KYC)">Choose Scale</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why" id="why">
+  <div class="why-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">— Why us —</div>
+      <h2>Why <em>IndiaWiseFilings?</em></h2>
+      <p>Choosing IndiaWiseFilings.com to make a difference</p>
+    </div>
+
+    <div class="why-panel">
+      <div class="why-list">
+
+        <div class="why-item active" data-target="scene-1">
+          <div class="why-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M12 1l3.09 6.26L22 8.27l-5 4.87 1.18 6.88L12 16.77l-6.18 3.25L7 13.14 2 8.27l6.91-1.01L12 1z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="why-label">Confidential & Safe</div>
+          <div class="why-arrow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+
+        <div class="why-item" data-target="scene-2">
+          <div class="why-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <rect x="2" y="6" width="20" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/>
+              <circle cx="12" cy="12" r="2.5" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M6 10v.01M18 14v.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="why-label">No Hidden Fees</div>
+          <div class="why-arrow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+
+        <div class="why-item" data-target="scene-3">
+          <div class="why-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="why-label">Guaranteed Satisfaction</div>
+          <div class="why-arrow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+
+        <div class="why-item" data-target="scene-4">
+          <div class="why-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M19 8l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="why-label">Expert CA / CS Assistance</div>
+          <div class="why-arrow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+
+        <div class="why-item" data-target="scene-1">
+          <div class="why-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="why-label">48-Hour Turnaround</div>
+          <div class="why-arrow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="why-detail">
+        <div class="why-visual" id="why-visual">
+
+          <div class="scene scene-1" data-scene="scene-1">
+            <div class="center-mark"></div>
+          </div>
+
+          <div class="scene scene-2" data-scene="scene-2" style="display:none;">
+            <div class="invoice">
+              <div><span>Pvt Ltd Reg.</span><span>₹7,999</span></div>
+              <div><span>2× DSC</span><span>FREE</span></div>
+              <div><span>PAN + TAN</span><span>FREE</span></div>
+              <div><span>GST Reg.</span><span>FREE</span></div>
+              <div><span>TOTAL</span><span>₹7,999</span></div>
+            </div>
+            <div class="stamp">PAID</div>
+          </div>
+
+          <div class="scene scene-3" data-scene="scene-3" style="display:none;">
+            <div class="review-card">
+              <div class="num">4.8/5</div>
+              <div class="stars">★★★★★</div>
+              <div class="label">12,000+ Reviews</div>
+            </div>
+          </div>
+
+          <div class="scene scene-4" data-scene="scene-4" style="display:none;">
+            <div class="profile p1"><span>RK</span> CA Rohit K.</div>
+            <div class="profile p2"><span>AS</span> CS Anjali S.</div>
+            <div class="profile p3"><span>VM</span> CA Vivek M.</div>
+            <div class="profile p4"><span>PG</span> CS Priya G.</div>
+            <div class="center-badge">
+              <div class="num">500+</div>
+              <div class="label">CAs &amp; CSs</div>
+            </div>
+          </div>
+
+          <div class="why-visual-overlay" id="why-overlay">LIVE · INDIA</div>
+        </div>
+        <div class="why-desc" id="why-desc">
+          All your private information is safe with us.
+          <span class="light">256-bit SSL encryption, bank-grade data security, and a signed NDA with every client — your documents never leave India's borders.</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EXPERTS -->
+<section class="experts" id="experts">
+  <div class="experts-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">— Talk to an expert —</div>
+      <h2 class="experts-headline">
+        <span class="count">500<sup>+</sup></span> Verified CA, CS, and Legal Experts <em>ready to streamline your business.</em>
+      </h2>
+    </div>
+
+    <div class="experts-grid">
+
+      <!-- Visual side -->
+      <div class="experts-visual">
+        <div class="experts-counter">LIVE · 87 EXPERTS ONLINE</div>
+
+        <div class="expert-chip c1">
+          <div class="avatar">RK</div>
+          <div>
+            <span class="role">CA · Mumbai</span>
+            Rohit Kapoor
+          </div>
+        </div>
+
+        <div class="expert-chip c2">
+          <div class="avatar">AS</div>
+          <div>
+            <span class="role">CS · Delhi</span>
+            Anjali Sharma
+          </div>
+        </div>
+
+        <div class="expert-chip c3">
+          <div class="avatar">VM</div>
+          <div>
+            <span class="role">Lawyer · BLR</span>
+            Vivek Menon
+          </div>
+        </div>
+
+        <div class="expert-chip c4">
+          <div class="avatar">PG</div>
+          <div>
+            <span class="role">IP · Hyderabad</span>
+            Priya Gupta
+          </div>
+        </div>
+
+        <div class="expert-main-card">
+          <div class="expert-avatar-lg">RK</div>
+          <div class="name">CA Rohit Kapoor</div>
+          <div class="credentials">ICAI · 12 Yrs · Tax + GST</div>
+          <div class="meta">
+            <div class="meta-item">
+              <div class="val">4.9★</div>
+              <div class="lbl">Rating</div>
+            </div>
+            <div class="meta-item">
+              <div class="val">2,400+</div>
+              <div class="lbl">Filings</div>
+            </div>
+            <div class="meta-item">
+              <div class="val">₹0</div>
+              <div class="lbl">First call</div>
+            </div>
+          </div>
+          <div class="live-status">Available now · Avg. response 8 min</div>
+        </div>
+      </div>
+
+      <!-- Action cards -->
+      <div class="expert-cards">
+
+        <div class="expert-card">
+          <div class="expert-illustration ill-1">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+              <path d="M3 21h18M5 21V10M19 21V10M9 21v-6h6v6M9 10V6l3-3 3 3v4M9 10h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="12" cy="6.5" r="0.5" fill="currentColor"/>
+            </svg>
+          </div>
+          <div class="expert-card-content">
+            <h4>Talk to a Lawyer</h4>
+            <p>Legal advice, contract drafting, litigation support, and representation across India.</p>
+          </div>
+          <div class="expert-card-cta">
+            <div class="availability">
+              <span class="num">120+</span>
+              available
+            </div>
+            <div class="expert-card-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="expert-card">
+          <div class="expert-illustration ill-2">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+              <path d="M3 17l6-6 4 4 8-8M14 7h7v7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M3 21h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="expert-card-content">
+            <h4>Talk to a Chartered Accountant</h4>
+            <p>Financial audits, tax planning, GST filing, and complete bookkeeping for your business.</p>
+          </div>
+          <div class="expert-card-cta">
+            <div class="availability">
+              <span class="num">180+</span>
+              available
+            </div>
+            <div class="expert-card-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="expert-card">
+          <div class="expert-illustration ill-3">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L4 7v6c0 4.5 3.5 8.5 8 9 4.5-.5 8-4.5 8-9V7l-8-5z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="expert-card-content">
+            <h4>Talk to a Company Secretary</h4>
+            <p>Corporate governance, ROC filings, board meetings, and regulatory compliance for your company.</p>
+          </div>
+          <div class="expert-card-cta">
+            <div class="availability">
+              <span class="num">90+</span>
+              available
+            </div>
+            <div class="expert-card-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="expert-card">
+          <div class="expert-illustration ill-4">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M12 8v4l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M8 2L2 8M22 8l-6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="expert-card-content">
+            <h4>Talk to an IP Lawyer</h4>
+            <p>Trademarks, copyrights, patents, and intellectual property protection for your brand and ideas.</p>
+          </div>
+          <div class="expert-card-cta">
+            <div class="availability">
+              <span class="num">60+</span>
+              available
+            </div>
+            <div class="expert-card-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="testimonial">
+  <div class="testimonial-inner">
+    <p class="testimonial-quote">
+      We registered our Pvt Ltd, got GST, and filed our first ITR — all through IndiaWiseFilings. What used to feel like a maze of government offices became a few WhatsApp messages. Genuinely the easiest part of starting up.
+    </p>
+    <div class="testimonial-author">
+      <div class="author-avatar">PR</div>
+      <div class="author-info">
+        <div class="author-name">Priya Ramanathan</div>
+        <div class="author-role">Co-founder, Loom & Lentil (Bengaluru)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <h2>Ready to make compliance <em>the boring part of your business?</em></h2>
+    <p>Join 12,000+ Indian founders who've stopped worrying about filings — and started focusing on growth.</p>
+    <div class="hero-actions" style="justify-content: center;">
+      <a href="#pricing" class="btn btn-saffron">Start your filing →</a>
+      <a href="#experts" class="btn btn-ghost">Book a free consultation</a>
+    </div>
+  </div>
+</section>
+
+<!-- POPULAR SEARCHES -->
+<section class="popular-searches" id="popular">
+  <div class="popular-inner">
+    <div class="popular-head">
+      <h3>Popular <em>Searches</em></h3>
+      <div class="meta">120+ services · updated daily</div>
+    </div>
+
+    <div class="tag-group-label">Most searched this week</div>
+    <div class="tag-cloud">
+      <a href="#" class="search-tag hot">Company Registration</a>
+      <a href="#" class="search-tag hot">GST Registration</a>
+      <a href="#" class="search-tag hot">Income Tax Filing</a>
+      <a href="#" class="search-tag hot">Trademark Registration</a>
+      <a href="#" class="search-tag hot">FSSAI License</a>
+      <a href="#" class="search-tag hot">Udyam Registration</a>
+    </div>
+
+    <div class="tag-group-label">Startup &amp; Registration</div>
+    <div class="tag-cloud">
+      <a href="/services/private-limited-company.html" class="search-tag">Private Limited Company</a>
+      <a href="/services/limited-liability-partnership.html" class="search-tag">LLP Registration</a>
+      <a href="/services/one-person-company.html" class="search-tag">One Person Company</a>
+      <a href="/services/partnership-firm.html" class="search-tag">Partnership Firm</a>
+      <a href="/services/sole-proprietorship.html" class="search-tag">Sole Proprietorship</a>
+      <a href="/services/startup-india.html" class="search-tag">Startup India Registration</a>
+      <a href="/services/indian-subsidiary.html" class="search-tag">Indian Subsidiary Setup</a>
+      <a href="/services/section-8-company.html" class="search-tag">Section 8 Company</a>
+      <a href="/services/nidhi-company.html" class="search-tag">Nidhi Company</a>
+      <a href="/services/producer-company.html" class="search-tag">Producer Company</a>
+      <a href="/services/private-limited-company.html" class="search-tag">Check Company Name Availability</a>
+      <a href="/services/din-application.html" class="search-tag">DIN Application</a>
+      <a href="/services/digital-signature.html" class="search-tag">Digital Signature Certificate</a>
+    </div>
+
+    <div class="tag-group-label">Tax &amp; GST</div>
+    <div class="tag-cloud">
+      <a href="/services/gstr-3b-filing.html" class="search-tag">GST Return Filing</a>
+      <a href="/services/gstr-1-filing.html" class="search-tag">GSTR-1 Filing</a>
+      <a href="/services/gstr-3b-filing.html" class="search-tag">GSTR-3B Filing</a>
+      <a href="/services/gstr-9-annual-return.html" class="search-tag">GST Annual Return</a>
+      <a href="/services/itr-business.html" class="search-tag">Business Tax Return Filing</a>
+      <a href="/services/itr-business.html" class="search-tag">Partnership Tax Return Filing</a>
+      <a href="/services/tds-return-filing.html" class="search-tag">TDS Return Filing</a>
+      <a href="/services/tax-audit.html" class="search-tag">Tax Audit</a>
+      <a href="/services/itr-salaried.html" class="search-tag">Salaried ITR Filing</a>
+      <a href="/services/itr-freelancer.html" class="search-tag">Freelancer ITR Filing</a>
+      <a href="#" class="search-tag trending">Crypto Tax Filing</a>
+      <a href="/services/itr-nri.html" class="search-tag">NRI Tax Filing</a>
+      <a href="/services/pan-application.html" class="search-tag">PAN Application</a>
+      <a href="/services/tan-application.html" class="search-tag">TAN Application</a>
+    </div>
+
+    <div class="tag-group-label">Trademark, Copyright &amp; Patent</div>
+    <div class="tag-cloud">
+      <a href="/services/trademark-search.html" class="search-tag">Trademark Search</a>
+      <a href="/services/trademark-registration.html" class="search-tag">Trademark Filing</a>
+      <a href="/services/trademark-objection.html" class="search-tag">Trademark Objection Reply</a>
+      <a href="/services/trademark-opposition.html" class="search-tag">Trademark Opposition</a>
+      <a href="/services/trademark-renewal.html" class="search-tag">Trademark Renewal</a>
+      <a href="/services/trademark-assignment.html" class="search-tag">Trademark Assignment</a>
+      <a href="/services/trademark-registration.html" class="search-tag">Trademark Certificate</a>
+      <a href="/services/copyright-registration.html" class="search-tag">Copyright Registration</a>
+      <a href="/services/patent-registration.html" class="search-tag">Patent Filing</a>
+      <a href="/services/design-registration.html" class="search-tag">Design Registration</a>
+      <a href="/services/usa-trademark.html" class="search-tag">USA Trademark</a>
+      <a href="/services/international-trademark.html" class="search-tag">International Trademark</a>
+    </div>
+
+    <div class="tag-group-label">Licenses &amp; Compliance</div>
+    <div class="tag-cloud">
+      <a href="/services/fssai-registration.html" class="search-tag">FSSAI Registration</a>
+      <a href="/services/trade-license.html" class="search-tag">Trade License</a>
+      <a href="/services/shop-act-registration.html" class="search-tag">Shop Establishment Act</a>
+      <a href="/services/import-export-code.html" class="search-tag">Import Export Code</a>
+      <a href="/services/iso-registration.html" class="search-tag">ISO Registration</a>
+      <a href="/services/esi-registration.html" class="search-tag">ESI Registration</a>
+      <a href="/services/pf-registration.html" class="search-tag">PF Registration</a>
+      <a href="/services/professional-tax.html" class="search-tag">Professional Tax Registration</a>
+      <a href="/services/professional-tax.html" class="search-tag">Professional Tax Return Filing</a>
+      <a href="/services/barcode-registration.html" class="search-tag">Barcode Registration</a>
+      <a href="/services/bis-registration.html" class="search-tag">BIS Registration</a>
+      <a href="/services/rcmc-registration.html" class="search-tag">RCMC Registration</a>
+      <a href="/services/trust-registration.html" class="search-tag">Trust Registration</a>
+      <a href="/services/12a-and-80g-registration.html" class="search-tag">12A &amp; 80G Registration</a>
+      <a href="/services/halal-certification.html" class="search-tag">Halal Certification</a>
+      <a href="/services/fire-license.html" class="search-tag">Fire License</a>
+    </div>
+
+    <div class="tag-group-label">MCA &amp; Annual Compliance</div>
+    <div class="tag-cloud">
+      <a href="/services/roc-annual-filing.html" class="search-tag">Company Annual Filing</a>
+      <a href="/services/llp-annual-filing.html" class="search-tag">LLP Annual Filing</a>
+      <a href="/services/sole-proprietorship.html" class="search-tag">Proprietorship Compliance</a>
+      <a href="/services/director-kyc.html" class="search-tag">Director KYC</a>
+      <a href="/services/company-name-change.html" class="search-tag">Company Name Change</a>
+      <a href="/services/legal-name-change.html" class="search-tag">Legal Name Change</a>
+      <a href="#" class="search-tag">Add or Remove Director</a>
+      <a href="/services/increase-authorized-capital.html" class="search-tag">Increase Authorized Capital</a>
+      <a href="/services/share-transfer.html" class="search-tag">Share Transfer</a>
+      <a href="#" class="search-tag">Company Winding Up</a>
+      <a href="#" class="search-tag">LLP Winding Up</a>
+      <a href="/services/din-reactivation.html" class="search-tag">DIN Reactivation</a>
+      <a href="#" class="search-tag">CCFS Scheme Compliance</a>
+      <a href="#" class="search-tag">MCA Services</a>
+    </div>
+
+    <div class="tag-group-label">Consultations &amp; Other Services</div>
+    <div class="tag-cloud">
+      <a href="/services/ca-consultation.html" class="search-tag">CA Consultation</a>
+      <a href="/services/lawyer-consultation.html" class="search-tag">Lawyer Consultation</a>
+      <a href="/services/cs-consultation.html" class="search-tag">CS Consultation</a>
+      <a href="/services/virtual-office.html" class="search-tag">Virtual Office</a>
+      <a href="#" class="search-tag">HR &amp; Payroll Service</a>
+      <a href="/services/notary-service.html" class="search-tag">Notary Service</a>
+      <a href="#" class="search-tag">Drafting &amp; Agreements</a>
+      <a href="/services/founders-agreement.html" class="search-tag">Founders Agreement</a>
+      <a href="/services/nda-drafting.html" class="search-tag">NDA Drafting</a>
+      <a href="/services/rental-agreement.html" class="search-tag">Rental Agreement</a>
+      <a href="#" class="search-tag trending">Virtual CFO Service</a>
+      <a href="#" class="search-tag trending">UAE Company Setup</a>
+      <a href="#" class="search-tag trending">USA LLC Registration</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo" style="color: var(--paper);">
+          <span class="logo-mark"></span>
+          <span>IndiaWise<span>Filings</span></span>
+        </a>
+        <p>India's most trusted platform for company registration, tax filing, and compliance — built by CAs, for businesses.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Startup</h5>
+        <ul>
+          <li><a href="/services/private-limited-company.html">Pvt Ltd Company</a></li>
+          <li><a href="/services/limited-liability-partnership.html">LLP Registration</a></li>
+          <li><a href="/services/one-person-company.html">OPC Registration</a></li>
+          <li><a href="/services/partnership-firm.html">Partnership Firm</a></li>
+          <li><a href="/services/startup-india.html">Startup India</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Tax & GST</h5>
+        <ul>
+          <li><a href="/services/gst-registration.html">GST Registration</a></li>
+          <li><a href="/services/gstr-3b-filing.html">GST Filing</a></li>
+          <li><a href="/services/itr-salaried.html">Income Tax Filing</a></li>
+          <li><a href="/services/tds-return-filing.html">TDS Returns</a></li>
+          <li><a href="/services/income-tax-notice-reply.html">Tax Notice</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Trademark</h5>
+        <ul>
+          <li><a href="/services/trademark-search.html">Trademark Search</a></li>
+          <li><a href="/services/trademark-registration.html">Trademark Filing</a></li>
+          <li><a href="/services/trademark-renewal.html">Trademark Renewal</a></li>
+          <li><a href="/services/copyright-registration.html">Copyright</a></li>
+          <li><a href="/services/patent-registration.html">Patent Filing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#">About us</a></li>
+          <li><a href="#">CA Network</a></li>
+          <li><a href="#">Refer & Earn</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 IndiaWiseFilings Technologies Pvt. Ltd. — Made with care in India.</div>
+      <div style="display: flex; gap: 1.5rem;">
+        <a href="#" style="color: rgba(250, 246, 239, 0.5); text-decoration: none;">Terms</a>
+        <a href="#" style="color: rgba(250, 246, 239, 0.5); text-decoration: none;">Privacy</a>
+        <a href="#" style="color: rgba(250, 246, 239, 0.5); text-decoration: none;">Refund Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Payment status toast -->
+<div class="pay-toast" id="payToast">
+  <button class="toast-close" onclick="document.getElementById('payToast').classList.remove('show')">×</button>
+  <div class="toast-title" id="toastTitle">Payment</div>
+  <div class="toast-body" id="toastBody">—</div>
+</div>
+
+<script>
+  // Interactive Why panel
+  (function() {
+    const items = document.querySelectorAll('.why-item');
+    const scenes = document.querySelectorAll('.scene');
+    const desc = document.getElementById('why-desc');
+    const overlay = document.getElementById('why-overlay');
+
+    const content = {
+      'scene-1': {
+        overlay: 'SECURE · ENCRYPTED',
+        bold: 'All your private information is safe with us.',
+        light: '256-bit SSL encryption, bank-grade data security, and a signed NDA with every client — your documents never leave India\'s borders.'
+      },
+      'scene-2': {
+        overlay: 'TRANSPARENT PRICING',
+        bold: 'What we quote is what you pay.',
+        light: 'Government fees charged at cost. No surprise add-ons, no upselling mid-process. Every rupee is itemized on your invoice.'
+      },
+      'scene-3': {
+        overlay: '4.8★ · 12,000+ REVIEWS',
+        bold: '100% satisfaction or your money back.',
+        light: 'If we don\'t deliver your filing as promised within the timeline, you get a full refund. No questions, no friction.'
+      },
+      'scene-4': {
+        overlay: '500+ VERIFIED EXPERTS',
+        bold: 'Real CAs and CSs, not chatbots.',
+        light: 'Every filing is handled by an ICAI / ICSI registered professional. Get a dedicated advisor on WhatsApp from day one.'
+      }
+    };
+
+    items.forEach(item => {
+      item.addEventListener('click', () => {
+        const target = item.dataset.target;
+        items.forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        scenes.forEach(s => {
+          s.style.display = s.dataset.scene === target ? 'block' : 'none';
+        });
+        const c = content[target];
+        if (c) {
+          overlay.textContent = c.overlay;
+          desc.innerHTML = c.bold + '<span class="light">' + c.light + '</span>';
+        }
+      });
+    });
+  })();
+
+  // ============================================
+  // RAZORPAY PAYMENT INTEGRATION
+  // ============================================
+  //
+  // ⚠️  IMPORTANT — REPLACE THESE BEFORE GOING LIVE:
+  //
+  //   1. RAZORPAY_KEY_ID — get from https://dashboard.razorpay.com/app/keys
+  //      • Use rzp_test_xxxxx for testing (no real money moves)
+  //      • Use rzp_live_xxxxx for production (after KYC approval)
+  //
+  //   2. BACKEND_ORDER_URL — endpoint that creates a Razorpay order
+  //      and returns { order_id, amount, currency }.
+  //      See accompanying server.js for a working example.
+  //
+  //   3. After payment, ALWAYS verify the signature on your backend
+  //      using razorpay_payment_id + razorpay_order_id + razorpay_signature.
+  //      Never trust the frontend alone.
+  //
+  // ============================================
+
+  const RAZORPAY_KEY_ID = 'rzp_test_REPLACE_WITH_YOUR_KEY';   // ← change this
+  const BACKEND_ORDER_URL = '/api/create-order';              // ← change this
+  const USE_BACKEND = false;  // set to true once your backend is live
+
+  function showToast(type, title, body) {
+    const toast = document.getElementById('payToast');
+    toast.className = 'pay-toast show ' + type;
+    document.getElementById('toastTitle').innerHTML = title;
+    document.getElementById('toastBody').innerHTML = body;
+    if (type === 'success' || type === 'info') {
+      setTimeout(() => toast.classList.remove('show'), 8000);
+    }
+  }
+
+  async function createOrder(amountInRupees, plan) {
+    // Production: ask your backend to create a verified Razorpay order
+    if (USE_BACKEND) {
+      const res = await fetch(BACKEND_ORDER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: amountInRupees * 100,  // paise
+          currency: 'INR',
+          plan: plan
+        })
+      });
+      if (!res.ok) throw new Error('Order creation failed');
+      return await res.json();  // { order_id, amount, currency }
+    }
+    // Demo mode: no order_id (test only — DO NOT use in production)
+    return { order_id: null, amount: amountInRupees * 100, currency: 'INR' };
+  }
+
+  async function startPayment(amountInRupees, plan, description) {
+    if (RAZORPAY_KEY_ID.includes('REPLACE')) {
+      showToast('info',
+        '🔧 Setup needed',
+        'Replace <code>RAZORPAY_KEY_ID</code> in the script with your real key from <a href="https://dashboard.razorpay.com/app/keys" target="_blank" style="color:var(--saffron-deep)">Razorpay dashboard</a>. See setup notes below for full instructions.'
+      );
+      return;
+    }
+
+    let order;
+    try {
+      order = await createOrder(amountInRupees, plan);
+    } catch (err) {
+      showToast('error', '⚠️ Could not start payment', 'Order creation failed: ' + err.message);
+      return;
+    }
+
+    const options = {
+      key: RAZORPAY_KEY_ID,
+      amount: order.amount,
+      currency: order.currency,
+      name: 'IndiaWiseFilings',
+      description: description || (plan + ' plan'),
+      image: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%23d97706"/></svg>',
+      order_id: order.order_id || undefined,
+      handler: function (response) {
+        // ⚠️  Production: send these IDs to your backend for signature verification
+        // Never grant service access based on frontend response alone.
+        showToast('success',
+          '✓ Payment successful',
+          'Payment ID: <code>' + response.razorpay_payment_id + '</code><br>Our team will reach out on WhatsApp within 30 minutes.'
+        );
+        console.log('Razorpay response:', response);
+        // TODO: POST to /api/verify-payment with response + plan
+      },
+      prefill: {
+        name: '',
+        email: '',
+        contact: ''
+      },
+      notes: {
+        plan: plan,
+        source: 'homepage'
+      },
+      theme: {
+        color: '#d97706'  // saffron, matches site
+      },
+      modal: {
+        ondismiss: function() {
+          showToast('info', 'Payment cancelled', 'No worries — you can restart anytime. Need help? <a href="#" style="color:var(--saffron-deep)">Chat with an advisor</a>.');
+        }
+      }
+    };
+
+    const rzp = new Razorpay(options);
+    rzp.on('payment.failed', function (response) {
+      showToast('error',
+        '✗ Payment failed',
+        (response.error && response.error.description) || 'Please try again or use a different method.'
+      );
+    });
+    rzp.open();
+  }
+
+  // Wire up all buttons that have data-pay attribute
+  document.querySelectorAll('[data-pay]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const amount = parseInt(btn.dataset.pay, 10);
+      const plan = btn.dataset.plan || 'Service';
+      const desc = btn.dataset.desc || '';
+      startPayment(amount, plan, desc);
+    });
+  });
+</script>
+
+<!-- ═══════════════════════════════════════════════════
+     LEAD CAPTURE MODAL — opens when any service link is clicked
+     ═══════════════════════════════════════════════════ -->
+<style>
+  .lead-modal-bg{position:fixed;inset:0;background:rgba(15,30,51,.55);backdrop-filter:blur(4px);z-index:9998;display:none;animation:fadeIn .25s ease}
+  .lead-modal-bg.show{display:flex;align-items:center;justify-content:center;padding:1rem}
+  .lead-modal{background:var(--paper);border-radius:20px;width:100%;max-width:460px;max-height:90vh;overflow-y:auto;box-shadow:0 30px 60px -20px rgba(0,0,0,.5);position:relative;animation:slideUpMod .35s cubic-bezier(.4,0,.2,1)}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  @keyframes slideUpMod{from{opacity:0;transform:translateY(20px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+  .lead-modal-head{padding:1.8rem 1.8rem 1rem;border-bottom:1px dashed var(--line);position:relative}
+  .lead-modal-head h3{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:500;letter-spacing:-.015em;padding-right:2rem}
+  .lead-modal-head h3 em{color:var(--saffron-deep);font-weight:500}
+  .lead-modal-head p{color:var(--muted);font-size:.9rem;margin-top:.4rem}
+  .lead-modal-close{position:absolute;top:1.2rem;right:1.2rem;width:32px;height:32px;border:1px solid var(--line);background:var(--card);border-radius:50%;font-size:1.2rem;color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1}
+  .lead-modal-close:hover{color:var(--ink);border-color:var(--ink)}
+  .lead-modal-body{padding:1.5rem 1.8rem 1.8rem;display:flex;flex-direction:column;gap:.75rem}
+  .lead-modal-body label{font-family:'Geist Mono',monospace;font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:-.3rem}
+  .lead-modal-body input,.lead-modal-body textarea{padding:.7rem .85rem;border:1px solid var(--line);border-radius:10px;font-family:inherit;font-size:.92rem;background:var(--card);width:100%;color:var(--ink)}
+  .lead-modal-body input:focus,.lead-modal-body textarea:focus{outline:none;border-color:var(--saffron);box-shadow:0 0 0 3px rgba(217,119,6,.12)}
+  .lead-modal-body textarea{min-height:60px;resize:vertical;font-family:inherit}
+  .lead-modal-body button[type=submit]{padding:.9rem;background:var(--ink);color:var(--paper);border:none;border-radius:100px;font-family:inherit;font-size:.95rem;font-weight:500;cursor:pointer;margin-top:.6rem;transition:background .2s}
+  .lead-modal-body button[type=submit]:hover{background:var(--saffron-deep)}
+  .lead-modal-body button[type=submit]:disabled{opacity:.6;cursor:not-allowed}
+  .lead-modal .selected-svc{display:inline-block;font-family:'Geist Mono',monospace;font-size:.72rem;background:var(--paper-warm);color:var(--saffron-deep);padding:.25rem .6rem;border-radius:4px;letter-spacing:.05em;margin-top:.5rem}
+  .lead-modal .msg{font-size:.85rem;padding:.7rem .85rem;border-radius:10px;margin-top:.5rem;display:none}
+  .lead-modal .msg.show{display:block}
+  .lead-modal .msg.success{background:rgba(22,163,74,.1);color:#15803d;border:1px solid rgba(22,163,74,.3)}
+  .lead-modal .msg.error{background:rgba(220,38,38,.08);color:#991b1b;border:1px solid rgba(220,38,38,.2)}
+  .lead-modal .alt{text-align:center;font-size:.78rem;color:var(--muted);margin-top:.4rem}
+  .lead-modal .alt a{color:var(--saffron-deep);text-decoration:none;font-weight:500}
+  .global-toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:.8rem 1.4rem;border-radius:100px;font-size:.88rem;z-index:9999;opacity:0;transition:opacity .3s;pointer-events:none}
+  .global-toast.show{opacity:1}
+</style>
+
+<div class="lead-modal-bg" id="leadModalBg">
+  <div class="lead-modal" role="dialog" aria-modal="true" aria-labelledby="lmTitle">
+    <div class="lead-modal-head">
+      <button class="lead-modal-close" onclick="closeLeadModal()" aria-label="Close">×</button>
+      <h3 id="lmTitle">Talk to an <em>advisor</em></h3>
+      <p>Share a few details — we'll WhatsApp you in 30 minutes with pricing, documents needed, and timelines.</p>
+      <span class="selected-svc" id="lmService">Selected service</span>
+    </div>
+    <form class="lead-modal-body" id="lmForm" novalidate>
+      <label for="lm-name">Your name</label>
+      <input id="lm-name" name="name" type="text" required placeholder="e.g. Ravi Kumar">
+      <label for="lm-phone">Phone (with WhatsApp)</label>
+      <input id="lm-phone" name="phone" type="tel" required pattern="[6-9][0-9]{9}" placeholder="9876543210">
+      <label for="lm-email">Email (optional)</label>
+      <input id="lm-email" name="email" type="email" placeholder="you@email.com">
+      <label for="lm-message">Anything to add? (optional)</label>
+      <textarea id="lm-message" name="message" placeholder="State, budget, urgency, etc."></textarea>
+      <button type="submit">Send my details →</button>
+      <div class="msg" id="lmMsg"></div>
+      <p class="alt">Or WhatsApp us directly at <a href="https://wa.me/919999999999" target="_blank">+91 99999 99999</a></p>
+    </form>
+  </div>
+</div>
+
+<div class="global-toast" id="globalToast"></div>
+
+<script>
+(function(){
+  const API = location.origin + '/api';
+  const bg = document.getElementById('leadModalBg');
+  const svcLabel = document.getElementById('lmService');
+  const form = document.getElementById('lmForm');
+  const msg = document.getElementById('lmMsg');
+
+  function openLeadModal(service){
+    svcLabel.textContent = service || 'General enquiry';
+    msg.classList.remove('show','success','error');
+    msg.textContent='';
+    bg.classList.add('show');
+    setTimeout(() => document.getElementById('lm-name').focus(), 100);
+    document.body.style.overflow = 'hidden';
+  }
+  window.openLeadModal = openLeadModal;
+  window.closeLeadModal = function(){
+    bg.classList.remove('show');
+    document.body.style.overflow = '';
+  };
+
+  // Click on backdrop to close
+  bg.addEventListener('click', e => { if(e.target === bg) closeLeadModal(); });
+  // Escape to close
+  document.addEventListener('keydown', e => { if(e.key === 'Escape' && bg.classList.contains('show')) closeLeadModal(); });
+
+  // Intercept every dead link inside mega-menu / footer / popular searches.
+  // The real service pages we already built (/services/...) are skipped.
+  document.addEventListener('click', function(e){
+    const a = e.target.closest('a');
+    if(!a) return;
+    const href = a.getAttribute('href');
+    if(!href || href === '#') {
+      // Find the link's visible text — that's the service name
+      const linkText = a.textContent.trim().replace(/Popular|New|Free/gi,'').trim();
+      // Skip nav triggers (Startup ▾ etc.) — they should open the mega menu, not the modal
+      if(a.classList.contains('mega-trigger')) return;
+      // Skip the logo link
+      if(a.classList.contains('logo')) return;
+      e.preventDefault();
+      openLeadModal(linkText || 'General enquiry');
+    }
+  });
+
+  // Form submit → CRM
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = form.name.value.trim();
+    const phone = form.phone.value.trim();
+    const email = form.email.value.trim();
+    const message = form.message.value.trim();
+    const service = svcLabel.textContent;
+    if(!name || !phone){
+      msg.className = 'msg show error';
+      msg.textContent = 'Name and phone are required.';
+      return;
+    }
+    if(!/^[6-9][0-9]{9}$/.test(phone)){
+      msg.className = 'msg show error';
+      msg.textContent = 'Please enter a valid 10-digit Indian mobile number.';
+      return;
+    }
+    const btn = form.querySelector('button[type=submit]');
+    const orig = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+    try{
+      const r = await fetch(API + '/leads/capture', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ name, phone, email: email||null, service, message: message||null, source:'homepage-modal' })
+      });
+      if(!r.ok) throw new Error('Server '+r.status);
+      const data = await r.json();
+      if(!data.ok) throw new Error('Capture failed');
+      msg.className = 'msg show success';
+      msg.textContent = '✓ Got it! An advisor will WhatsApp you in 30 minutes.';
+      form.reset();
+      setTimeout(() => { closeLeadModal(); }, 2200);
+    } catch(err){
+      msg.className = 'msg show error';
+      msg.textContent = 'Something went wrong. Please WhatsApp us at +91 99999 99999.';
+      console.error(err);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = orig;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
