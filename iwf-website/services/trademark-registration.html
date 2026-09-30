@@ -451,7 +451,7 @@
   <p>The cheapest insurance you'll ever buy for your business. File today and use ™ tomorrow.</p>
   <div class="btn-row">
     <a href="#start" class="btn btn-saffron">Start your filing →</a>
-    <a href="https://wa.me/919999999999?text=Hi%20IndiaWiseFilings,%20I%20need%20to%20trademark%20my%20brand" class="btn btn-ghost" target="_blank">Talk on WhatsApp</a>
+    <a href="https://wa.me/919319179754?text=Hi%20IndiaWiseFilings,%20I%20need%20to%20trademark%20my%20brand" class="btn btn-ghost" target="_blank">Talk on WhatsApp</a>
   </div>
 </section>
 
@@ -501,7 +501,7 @@ document.getElementById('leadForm').addEventListener('submit', async (e) => {
     const r=await fetch(API+'/leads/capture',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,phone,email:email||null,service:'Trademark Registration',message:'Brand: '+brand+(cls?' · '+cls:''),source:'service-page-trademark'})});
     if(!r.ok)throw new Error();const data=await r.json();if(!data.ok)throw new Error();
     showFormMsg('success','✓ Got it! Trademark search report on WhatsApp in 30 minutes.');f.reset();
-  }catch(err){showFormMsg('error','Something went wrong. Please WhatsApp us at +91 99999 99999 instead.');}finally{btn.disabled=false;btn.textContent=orig;}
+  }catch(err){showFormMsg('error','Something went wrong. Please WhatsApp us at +91 93191 79754 instead.');}finally{btn.disabled=false;btn.textContent=orig;}
 });
 const RAZORPAY_KEY_ID='rzp_test_REPLACE_WITH_YOUR_KEY';
 async function payNow(){
