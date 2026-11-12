@@ -223,6 +223,9 @@
 
 <script>
 const API = location.origin + '/api';
+// The dashboard itself is served from /crm/, but the API stays at /api so
+// the marketing website can also POST leads to /api/leads/capture without
+// needing to know about /crm.
 let TOKEN = localStorage.getItem('iwf_token') || null;
 let ME = JSON.parse(localStorage.getItem('iwf_me') || 'null');
 let VIEW = 'kanban';

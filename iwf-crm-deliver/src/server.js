@@ -14,7 +14,12 @@ const notify = require('./notify');
 const app = express();
 app.use(express.json());
 app.use(cors({ origin: (process.env.CORS_ORIGINS || '*').split(',') }));
-app.use(express.static(require('path').join(__dirname, '..', 'public')));
+
+// Dashboard lives at /crm (the marketing website owns the root URL).
+// e.g. https://indiawisefilings.com/crm  → CRM login + dashboard
+app.use('/crm', express.static(require('path').join(__dirname, '..', 'public')));
+// If someone visits /crm (no trailing slash), redirect cleanly to /crm/
+app.get('/crm', (req, res) => res.redirect('/crm/'));
 
 const STATUSES = ['new', 'contacted', 'quoted', 'paid', 'in_progress', 'completed', 'lost'];
 
@@ -296,7 +301,7 @@ async function start() {
   const PORT = process.env.PORT || 4000;
   app.listen(PORT, () => {
     console.log(`\n  IndiaWiseFiling CRM running on http://localhost:${PORT}`);
-    console.log(`  Dashboard: http://localhost:${PORT}/`);
+    console.log(`  Dashboard: http://localhost:${PORT}/crm/`);
     console.log(`  API health: http://localhost:${PORT}/api/health\n`);
   });
 }

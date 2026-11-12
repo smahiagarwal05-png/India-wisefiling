@@ -1,5 +1,8 @@
 # Move CRM to /crm path — server instructions
 
+> **Update (Nov 2026):** the `server.js.updated` and `index.html.updated` changes below are already applied in `iwf-crm-deliver/`. On the server, just pull the repo and run `pm2 restart iwf-crm`. The Nginx and DNS steps are still pending.
+
+
 ## What changed and why
 
 The CRM previously served its dashboard at `/`, which meant it owned the root URL. You want the **marketing website** at `https://indiawisefilings.com/` and the **CRM** at `https://indiawisefilings.com/crm`. So:
