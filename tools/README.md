@@ -12,3 +12,10 @@ business search, learning center, legal pages, /services/ directory).
 
 Safe to re-run any time. Service pages keep their own content; only the header
 and footer between the `<!--IWF:HEADER-->` / `<!--IWF:FOOTER-->` markers are replaced.
+
+## Service page content
+
+`python3 tools/rebuild_services.py` adds the full sections (overview, what's included,
+documents, process, FAQs, related services) to service pages. Content lives in
+`tools/service_content/<category>.py`, one entry per page. Edit the text there and re-run.
+Pages keep their own hero, lead form and payment code. Safe to re-run.
